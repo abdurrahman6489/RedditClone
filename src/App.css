@@ -1,0 +1,19 @@
+#root {
+  margin: 0;
+  padding: 2rem;
+  text-align: center;
+}
+body {
+  background-color: var(--primary-BackgoundColor);
+}
+body::-webkit-scrollbar {
+  display: none;
+}
+.grid-container {
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  margin-left: 5vw;
+  margin-right: 2vw;
+  margin-top: 10vh;
+}
