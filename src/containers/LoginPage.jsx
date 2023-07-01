@@ -31,16 +31,16 @@ const FORM_CONTAINER_STYLE = {
 };
 
 const BTN_STYLE = {
-  maxHeight: "3vh",
+  maxHeight: "5vh",
   backgroundColor: "#1976d2",
   color: "#fff",
   border: "none",
   borderRadius: "5px",
-  fontSize: "1.5em",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   padding: "0.7em",
+  margin: "auto",
 };
 
 const LoginPage = () => {
@@ -87,7 +87,7 @@ const LoginPage = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: "15vh", textAlign: "center" }}>
+    <Container maxWidth="sm" sx={{ mt: "10vh", textAlign: "center" }}>
       <Chip
         icon={<ArrowLeftIcon />}
         label="Home"
@@ -96,6 +96,14 @@ const LoginPage = () => {
         sx={{ mb: "1vh" }}
         onClick={() => navigate(routepath.home)}
       />
+      <Button
+        sx={BTN_STYLE}
+        variant="contained"
+        startIcon={<GoogleIcon />}
+        onClick={onLoginClick}
+      >
+        Signin with Google
+      </Button>
       <Grid
         justifyContent="center"
         alignItems="center"
@@ -103,17 +111,7 @@ const LoginPage = () => {
         sx={{ maxHeight: "100vh" }}
       >
         <Grid item>
-          <Button
-            sx={BTN_STYLE}
-            variant="contained"
-            startIcon={<GoogleIcon />}
-            onClick={onLoginClick}
-          >
-            Signin with Google
-          </Button>
-        </Grid>
-        <Divider />
-        <Grid item>
+          <Divider />
           <FormControl sx={FORM_CONTAINER_STYLE}>
             <Typography variant="h4" sx={{ color: "#AA4A44" }}>
               Sign in
