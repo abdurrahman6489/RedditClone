@@ -26,7 +26,7 @@ export default function useLocalStorage() {
 
     const newPosts = data.photos.map((photo, index) => ({
       ...photo,
-      upvote: generateReaction(200, 300),
+      upvote: generateReaction(200, 600),
       downvote: generateReaction(100, 200),
       voteStatus: false,
       username: userData.users[index].firstName,

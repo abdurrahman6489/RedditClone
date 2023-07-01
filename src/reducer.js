@@ -1,5 +1,15 @@
+const filterCallback = {
+  0: (elem) => true,
+  1: (elem) => elem.upvote / elem.downvote > 3,
+  2: (elem) =>
+    elem.upvote / elem.downvote > 1.5 && elem.upvote / elem.downvote <= 3,
+  3: (elem) =>
+    elem.upvote / elem.downvote >= 1 && elem.upvote / elem.downvote < 1.5,
+};
+
 const INITIAL_STATE = {
   posts: [],
+  filteredPosts: [],
   users: [],
   isLoggedIn: false,
   successMsg: "",
@@ -12,6 +22,7 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
       return {
         ...state,
         posts: [...action.payload.posts],
+        filteredPosts: action.payload.posts.filter(filterCallback["0"]),
         users: [...action.payload.users],
       };
 
@@ -72,6 +83,22 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
         isLoggedIn: true,
       };
 
+    case "addUser":
+      const { username, password, firstName, lastName } = action.payload;
+      return {
+        ...state,
+        currentUser: { ...state.currentUser, username, password, firstName },
+        users: [
+          ...state.users,
+          { id: state.users.length + 1, ...action.payload },
+        ],
+        isLoggedIn: true,
+      };
+    case "filterPost":
+      return {
+        ...state,
+        filteredPosts: state.posts.filter(filterCallback[action.payload]),
+      };
     case "setMsg":
       return { ...state, successMsg: action.payload.msg };
   }

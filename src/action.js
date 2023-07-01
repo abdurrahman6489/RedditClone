@@ -33,6 +33,21 @@ export const loginUser = (username, password, index) => {
     index,
   };
 };
+
+export const addUser = ({ username, password, firstName, lastName }) => {
+  return {
+    type: "addUser",
+    payload: { username, password, firstName, lastName },
+  };
+};
+
+export const filterPost = (index) => {
+  return {
+    type: "filterPost",
+    payload: index,
+  };
+};
+
 export const setMsg = (msg) => {
   return {
     type: "setMsg",

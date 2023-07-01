@@ -1,79 +1,95 @@
 import React from "react";
-import {
-  Card,
-  Stack,
-  Heading,
-  Button,
-  ButtonGroup,
-  Image,
-  Text,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Divider,
-} from "@chakra-ui/react";
-import { ArrowDownIcon, ArrowUpIcon } from "@chakra-ui/icons";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import { ArrowDownward } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { changeUpvote, changeDownvote } from "../action";
-
-const btnStyle = {
-  maxWidth: "60%",
-  minWidth: "40%",
-  borderRadius: "1em",
-  width: "50%",
-};
+import { changeDownvote, changeUpvote } from "../action";
+import { useNavigate } from "react-router-dom";
+import { routepath } from "../routepaths";
+const LOGIN_PATH = routepath.login;
 
 const Post = ({
   title,
+  id,
   description,
   url,
   upvote,
   downvote,
   username,
-  id,
-  onOpen,
+  voteStatus,
 }) => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
+
+  const voted = voteStatus;
+  const BTN_STYLE = voted ? "contained" : "outlined";
+
+  const handleVote = (event) => {
+    event.stopPropagation();
+    if (!isLoggedIn) {
+      navigate(LOGIN_PATH);
+      return;
+    }
+    let name = event.target.name;
+    if (name == "Upvote") {
+      dispatch(changeUpvote({ id, upvote }));
+      return;
+    }
+    dispatch(changeDownvote({ id, downvote }));
+  };
   return (
-    <Card maxW="sm">
-      <CardBody>
-        <Image src={url} alt={description} borderRadius="lg" />
-        <Stack mt="6" spacing="3">
-          <Heading size="md">{title}</Heading>
-          <Text>{description}</Text>
-          <Text color="blue.600" fontSize="2xl">
-            Posted by : {username}
-          </Text>
-        </Stack>
-      </CardBody>
-      <Divider />
-      <CardFooter>
-        <ButtonGroup spacing="2">
-          <Button
-            variant="solid"
-            colorScheme="green"
-            leftIcon={<ArrowUpIcon />}
-            style={btnStyle}
-            onClick={() =>
-              isLoggedIn ? dispatch(changeUpvote({ id, upvote })) : onOpen()
-            }
-          >
-            Upvote : {upvote}
-          </Button>
-          <Button
-            variant="ghost"
-            colorScheme="orange"
-            rightIcon={<ArrowDownIcon />}
-            style={{ ...btnStyle }}
-            onClick={() =>
-              isLoggedIn ? dispatch(changeDownvote({ id, downvote })) : onOpen()
-            }
-          >
-            Downvote : {downvote}
-          </Button>
-        </ButtonGroup>
-      </CardFooter>
+    <Card
+      sx={{
+        maxWidth: 400,
+        width: 350,
+        objectFit: "cover",
+        aspectRatio: 1 / 1.4,
+        position: "relative",
+      }}
+    >
+      <CardMedia sx={{ height: 220 }} image={url} title={title} />
+      <CardContent>
+        <Typography gutterBottom variant="h6" component="div">
+          {title}
+        </Typography>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
+        >
+          {description}
+        </Typography>
+        <Typography variant="h6" color="text.secondary" sx={{ mt: 2 }}>
+          posted by : {username}
+        </Typography>
+      </CardContent>
+      <CardActions sx={{ position: "absolute", bottom: 4 }}>
+        <Button
+          variant={BTN_STYLE}
+          color="success"
+          name="Upvote"
+          onClick={handleVote}
+          startIcon={<ArrowUpwardIcon />}
+        >
+          Upvote {upvote}
+        </Button>
+        <Button
+          variant={BTN_STYLE}
+          color="error"
+          name="Downvote"
+          onClick={handleVote}
+          endIcon={<ArrowDownward />}
+        >
+          Downvote {downvote}
+        </Button>
+      </CardActions>
     </Card>
   );
 };
