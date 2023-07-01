@@ -7,6 +7,16 @@ import Stack from "@mui/material/Stack";
 import { useSelector, useDispatch } from "react-redux";
 import { filterPost } from "../action";
 import { chipProps, chipVariantStatus } from "../utils";
+
+const GRID_STYLES = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(20rem,1fr)",
+  justfiyContent: "Center",
+  alignItems: "Center",
+  alignContent: "Center",
+  marginTop: "2vh",
+};
+
 const Homepage = () => {
   const filteredPosts = useSelector((state) => state.filteredPosts);
   const dispatch = useDispatch();
@@ -44,15 +54,11 @@ const Homepage = () => {
           );
         })}
       </Stack>
-      <Grid container spacing={2} sx={{ mt: "2vh" }}>
-        {filteredPosts?.map((post) => {
-          return (
-            <Grid item xs={4} key={post.id}>
-              <Post {...post} />
-            </Grid>
-          );
-        })}
-      </Grid>
+      <div style={GRID_STYLES}>
+        {filteredPosts?.map((post) => (
+          <Post {...post} />
+        ))}
+      </div>
     </Container>
   );
 };
