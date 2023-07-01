@@ -50,7 +50,7 @@ const Post = ({
         maxWidth: 400,
         width: 350,
         objectFit: "cover",
-        aspectRatio: 1 / 1.4,
+        aspectRatio: 1 / 1.5,
         position: "relative",
       }}
     >

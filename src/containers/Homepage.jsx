@@ -46,7 +46,7 @@ const Homepage = () => {
                       currentIndex == index ? true : false
                     )
                   );
-                  dispatch(filterPost(index));
+                  dispatch(filterPost(label));
                 }
               }}
               key={label}

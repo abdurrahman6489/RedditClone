@@ -1,3 +1,4 @@
+import { filterObject } from "./utils";
 const filterCallback = {
   0: (elem) => true,
   1: (elem) => elem.upvote / elem.downvote > 3,
@@ -6,7 +7,6 @@ const filterCallback = {
   3: (elem) =>
     elem.upvote / elem.downvote >= 1 && elem.upvote / elem.downvote < 1.5,
 };
-
 const INITIAL_STATE = {
   posts: [],
   filteredPosts: [],
@@ -22,7 +22,9 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
       return {
         ...state,
         posts: [...action.payload.posts],
-        filteredPosts: action.payload.posts.filter(filterCallback["0"]),
+        filteredPosts: filterObject["Best"]["filterThePosts"](
+          action.payload.posts
+        ),
         users: [...action.payload.users],
       };
 
@@ -67,6 +69,7 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
             ...action.payload,
             upvote: 0,
             downvote: 0,
+            time: Date.now(),
             username: state.currentUser.firstName || "",
           },
           ...state.posts,
@@ -97,7 +100,7 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
     case "filterPost":
       return {
         ...state,
-        filteredPosts: state.posts.filter(filterCallback[action.payload]),
+        filteredPosts: filterObject[action.payload].filterThePosts(state.posts),
       };
     case "setMsg":
       return { ...state, successMsg: action.payload.msg };

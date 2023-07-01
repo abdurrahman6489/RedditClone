@@ -30,6 +30,7 @@ export default function useLocalStorage() {
       downvote: generateReaction(100, 200),
       voteStatus: false,
       username: userData.users[index].firstName,
+      time: Date.now(),
     }));
 
     dispatch(fetchPostandUser(newPosts, userData.users));

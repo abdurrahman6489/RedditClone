@@ -41,10 +41,10 @@ export const addUser = ({ username, password, firstName, lastName }) => {
   };
 };
 
-export const filterPost = (index) => {
+export const filterPost = (label) => {
   return {
     type: "filterPost",
-    payload: index,
+    payload: label,
   };
 };
 
