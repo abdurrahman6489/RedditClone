@@ -39,7 +39,18 @@ const Homepage = () => {
   };
   return (
     <Container maxwidth="lg" sx={{ mt: "5vh" }}>
-      <Stack direction="row" spacing={3}>
+      <Stack
+        direction="row"
+        spacing={3}
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(1rem, 5rem))",
+          justifyContent: "center",
+          alignItems: "center",
+          alignContent: "center",
+          gap: "2%",
+        }}
+      >
         {chipProps?.map((prop, index) => {
           const { label, color } = prop;
           return (
