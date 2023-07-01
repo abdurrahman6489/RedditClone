@@ -31,16 +31,16 @@ const FORM_CONTAINER_STYLE = {
 };
 
 const BTN_STYLE = {
-  maxHeight: "4vh",
+  maxHeight: "3vh",
   backgroundColor: "#1976d2",
   color: "#fff",
   border: "none",
   borderRadius: "5px",
-  fontSize: "25px",
+  fontSize: "1.5em",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  padding: "1em",
+  padding: "0.7em",
 };
 
 const LoginPage = () => {
