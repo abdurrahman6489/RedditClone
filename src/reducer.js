@@ -97,6 +97,18 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
         ],
         isLoggedIn: true,
       };
+
+    case "loginWithGoogle":
+      const { googleUsername, googleFirstName } = action.payload;
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          username: googleUsername,
+          firstName: googleFirstName,
+        },
+        isLoggedIn: true,
+      };
     case "filterPost":
       return {
         ...state,

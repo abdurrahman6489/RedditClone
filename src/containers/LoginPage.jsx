@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { auth, provider } from "../firebase";
+import { signInWithPopup } from "@firebase/auth";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import { Link } from "react-router-dom";
@@ -12,15 +14,17 @@ import {
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import { useSelector, useDispatch } from "react-redux";
-import { loginUser, setMsg } from "../action";
+import { loginUser, setMsg, loginWithGoogle } from "../action";
 import { useNavigate } from "react-router-dom";
 import { routepath } from "../routepaths";
+
 const SUCCESS_NAVIGATE_PAGE = routepath.home;
+
 const FORM_CONTAINER_STYLE = {
   maxWidth: "95%",
   width: "90%",
   aspectRatio: "1/1.5",
-  mt: "15vh",
+  mt: "10vh",
   padding: "1em",
 };
 
@@ -65,10 +69,23 @@ const LoginPage = () => {
   };
   const onLoginClick = () => {
     console.log("clicked");
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // console.log("result ", result);
+        const userName = result.user.displayName;
+        const fullName = userName.split(" ");
+        const firstName = fullName[0];
+        const lastName = fullName[1];
+        dispatch(loginWithGoogle(userName, firstName, lastName));
+        navigate(SUCCESS_NAVIGATE_PAGE);
+      })
+      .catch((error) => {
+        console.log("error ", error);
+      });
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: "10vh", textAlign: "center" }}>
+    <Container maxWidth="sm" sx={{ mt: "15vh", textAlign: "center" }}>
       <Grid
         justifyContent="center"
         alignItems="center"

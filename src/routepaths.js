@@ -3,5 +3,5 @@ export const routepath = {
   login: "/login",
   signup: "/signup",
   createPost: "/create-post",
-  singlepost: "/post/:id",
+  singlepost: "/post",
 };

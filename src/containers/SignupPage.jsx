@@ -82,9 +82,6 @@ const SignupPage = () => {
     navigate(currentPath);
     setUser(INITIAL_STATE);
   };
-  const onLoginClick = () => {
-    console.log("clicked");
-  };
 
   return (
     <Container maxWidth="sm" sx={{ mt: "10vh", textAlign: "center" }}>

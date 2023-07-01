@@ -31,6 +31,7 @@ export default function useLocalStorage() {
       voteStatus: false,
       username: userData.users[index].firstName,
       time: Date.now(),
+      isHomeCommunity: getFollowStatus(),
     }));
 
     dispatch(fetchPostandUser(newPosts, userData.users));
@@ -54,4 +55,9 @@ const saveDatatoLocalStorage = (KEY, data) => {
 
 const generateReaction = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
+};
+
+const getFollowStatus = () => {
+  let number = Math.floor(Math.random() * 100) + 1;
+  return number % 2 == 0;
 };

@@ -40,7 +40,7 @@ function App() {
       ),
     },
     {
-      path: singlepost,
+      path: `${singlepost}/:id`,
       element: (
         <Layout>
           <SinglePost />

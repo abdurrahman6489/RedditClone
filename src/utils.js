@@ -33,6 +33,11 @@ export const filterObject = {
     filterThePosts: (array) =>
       array.slice().sort((post1, post2) => post2.upvote - post1.upvote),
   },
+  Home: {
+    label: "Home",
+    color: "Success",
+    filterThePosts: (array) => array.filter((post) => post.isHomeCommunity),
+  },
   Popular: {
     label: "Popular",
     color: "secondary",
@@ -45,4 +50,11 @@ export const chipProps = Object.keys(filterObject)
   .map((chipProp) => {
     const { label, color } = filterObject[chipProp];
     return { label, color };
+  });
+
+export const selectTagProps = Object.keys(filterObject)
+  .filter((elem, index) => index > 4)
+  .map((selectProp) => {
+    const { label, color } = filterObject[selectProp];
+    return { value: label, content: label };
   });

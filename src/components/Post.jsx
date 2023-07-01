@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeDownvote, changeUpvote } from "../action";
 import { useNavigate } from "react-router-dom";
 import { routepath } from "../routepaths";
+
+const SUCCESS_PATH = routepath.singlepost;
 const LOGIN_PATH = routepath.login;
 
 const Post = ({
@@ -44,6 +46,14 @@ const Post = ({
     }
     dispatch(changeDownvote({ id, downvote }));
   };
+
+  const handleClick = () => {
+    if (!isLoggedIn) {
+      navigate(LOGIN_PATH);
+      return;
+    }
+    navigate(`${SUCCESS_PATH}/:${id}`);
+  };
   return (
     <Card
       sx={{
@@ -53,6 +63,7 @@ const Post = ({
         aspectRatio: 1 / 1.5,
         position: "relative",
       }}
+      onClick={handleClick}
     >
       <CardMedia sx={{ height: 220 }} image={url} title={title} />
       <CardContent>

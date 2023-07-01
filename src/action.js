@@ -34,6 +34,17 @@ export const loginUser = (username, password, index) => {
   };
 };
 
+export const loginWithGoogle = (
+  googleUsername,
+  googleFirstName,
+  googleLastName
+) => {
+  return {
+    type: "loginWithGoogle",
+    payload: { googleUsername, googleFirstName, googleLastName },
+  };
+};
+
 export const addUser = ({ username, password, firstName, lastName }) => {
   return {
     type: "addUser",
