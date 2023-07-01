@@ -13,12 +13,15 @@ import {
   TextField,
   TextareaAutosize,
 } from "@mui/material";
+import Chip from "@mui/material/Chip";
+import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 const FORM_CONTAINER_STYLE = {
   maxWidth: "95%",
   width: "90%",
   aspectRatio: "1/1.5",
   padding: "1em",
 };
+
 const SUCCESS_NAVIGATE_PAGE = routepath.home;
 const NewPost = () => {
   const [post, setPost] = useState({ title: "", description: "", url: "" });
@@ -46,6 +49,13 @@ const NewPost = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: "10vh", textAlign: "center" }}>
+      <Chip
+        icon={<ArrowLeftIcon />}
+        label="Home"
+        color="success"
+        variant="outlined"
+        onClick={() => navigate(routepath.home)}
+      />
       <Grid
         justifyContent="center"
         alignItems="center"

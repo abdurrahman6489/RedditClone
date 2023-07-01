@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { changeDownvote, changeUpvote } from "../action";
 import { useNavigate, useParams } from "react-router-dom";
+import { routepath } from "../routepaths";
 import {
   Typography,
   Container,
@@ -14,7 +15,9 @@ import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { ArrowDownward } from "@mui/icons-material";
+import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ShareIcon from "@mui/icons-material/Share";
+
 const FORM_CONTAINER_STYLE = {
   maxWidth: "95%",
   width: "90%",
@@ -64,6 +67,13 @@ const SinglePost = () => {
   if (!title) return <div>No data found</div>;
   return (
     <Container maxWidth="sm" sx={{ mt: "10vh", textAlign: "center" }}>
+      <Chip
+        icon={<ArrowLeftIcon />}
+        label="Home"
+        color="success"
+        variant="outlined"
+        onClick={() => navigate(routepath.home)}
+      />
       <Typography variant="h5" sx={{ color: "#AA4A44" }}>
         {title}
       </Typography>

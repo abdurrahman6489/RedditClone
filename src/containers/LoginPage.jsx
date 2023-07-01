@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { auth, provider } from "../firebase";
 import { signInWithPopup } from "@firebase/auth";
-import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
+import { useSelector, useDispatch } from "react-redux";
+import { loginUser, setMsg, loginWithGoogle } from "../action";
+import { useNavigate } from "react-router-dom";
+import { routepath } from "../routepaths";
 import { Link } from "react-router-dom";
 import {
   Button,
@@ -12,11 +14,11 @@ import {
   Grid,
   Box,
 } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
+import TextField from "@mui/material/TextField";
 import GoogleIcon from "@mui/icons-material/Google";
-import { useSelector, useDispatch } from "react-redux";
-import { loginUser, setMsg, loginWithGoogle } from "../action";
-import { useNavigate } from "react-router-dom";
-import { routepath } from "../routepaths";
+import Chip from "@mui/material/Chip";
+import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 
 const SUCCESS_NAVIGATE_PAGE = routepath.home;
 
@@ -86,6 +88,14 @@ const LoginPage = () => {
 
   return (
     <Container maxWidth="sm" sx={{ mt: "15vh", textAlign: "center" }}>
+      <Chip
+        icon={<ArrowLeftIcon />}
+        label="Home"
+        color="success"
+        variant="outlined"
+        sx={{ mb: "1vh" }}
+        onClick={() => navigate(routepath.home)}
+      />
       <Grid
         justifyContent="center"
         alignItems="center"

@@ -76,6 +76,12 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
         ],
       };
 
+    case "filterPost":
+      return {
+        ...state,
+        filteredPosts: filterObject[action.payload].filterThePosts(state.posts),
+      };
+
     case "loginUser":
       return {
         ...state,
@@ -109,11 +115,13 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
         },
         isLoggedIn: true,
       };
-    case "filterPost":
+
+    case "userLogout":
       return {
         ...state,
-        filteredPosts: filterObject[action.payload].filterThePosts(state.posts),
+        isLoggedIn: false,
       };
+
     case "setMsg":
       return { ...state, successMsg: action.payload.msg };
   }

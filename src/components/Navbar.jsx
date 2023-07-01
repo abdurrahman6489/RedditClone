@@ -53,7 +53,9 @@ const Navbar = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to={routepath.home}>
-            <RedditIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+            <Avatar sx={{ bgColor: "red" }}>
+              <RedditIcon />
+            </Avatar>
           </Link>
           <Typography
             variant="h6"
@@ -108,7 +110,6 @@ const Navbar = () => {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -125,7 +126,7 @@ const Navbar = () => {
               textDecoration: "none",
             }}
           >
-            LOGO
+            reddit
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page, index) => (

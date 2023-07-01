@@ -59,6 +59,12 @@ export const filterPost = (label) => {
   };
 };
 
+export const userLogout = () => {
+  return {
+    type: "userLogout",
+  };
+};
+
 export const setMsg = (msg) => {
   return {
     type: "setMsg",

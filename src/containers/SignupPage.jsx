@@ -14,6 +14,8 @@ import {
   Grid,
   Box,
 } from "@mui/material";
+import Chip from "@mui/material/Chip";
+import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 
 const SUCCESS_NAVIGATE_PAGE = routepath.home;
 const LOGIN_PAGE = routepath.login;
@@ -24,20 +26,7 @@ const FORM_CONTAINER_STYLE = {
   maxWidth: "95%",
   width: "90%",
   aspectRatio: "1/1.5",
-  mt: "15vh",
-  padding: "1em",
-};
-
-const BTN_STYLE = {
-  height: "40px",
-  backgroundColor: "#1976d2",
-  color: "#fff",
-  border: "none",
-  borderRadius: "5px",
-  fontSize: "25px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
+  mt: "5vh",
   padding: "1em",
 };
 
@@ -85,6 +74,13 @@ const SignupPage = () => {
 
   return (
     <Container maxWidth="sm" sx={{ mt: "10vh", textAlign: "center" }}>
+      <Chip
+        icon={<ArrowLeftIcon />}
+        label="Home"
+        color="success"
+        variant="outlined"
+        onClick={() => navigate(routepath.home)}
+      />
       <Typography variant="h4" sx={{ color: "#AA4A44" }}>
         Sign up
       </Typography>

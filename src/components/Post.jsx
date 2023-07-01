@@ -62,6 +62,7 @@ const Post = ({
         objectFit: "cover",
         aspectRatio: 1 / 1.5,
         position: "relative",
+        cursor: "pointer",
       }}
       onClick={handleClick}
     >
