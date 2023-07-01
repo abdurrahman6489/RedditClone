@@ -31,7 +31,7 @@ const FORM_CONTAINER_STYLE = {
 };
 
 const BTN_STYLE = {
-  height: "40px",
+  maxHeight: "4vh",
   backgroundColor: "#1976d2",
   color: "#fff",
   border: "none",
