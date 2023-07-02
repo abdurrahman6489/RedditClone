@@ -119,6 +119,7 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
     case "userLogout":
       return {
         ...state,
+        filteredPosts: filterObject["Best"]["filterThePosts"](state.posts),
         isLoggedIn: false,
       };
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Post from "../components/Post";
 import Container from "@mui/material/Container";
 import MenuItem from "@mui/material/MenuItem";
@@ -21,10 +21,14 @@ const GRID_STYLES = {
 
 const Homepage = () => {
   const filteredPosts = useSelector((state) => state.filteredPosts);
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const dispatch = useDispatch();
   const [variants, setVariants] = useState(chipVariantStatus);
   const [selectValue, setSelectValue] = useState(selectTagProps[0].value);
 
+  useEffect(() => {
+    if (!isLoggedIn) setVariants(chipVariantStatus);
+  }, [isLoggedIn]);
   const getVariant = (status) => {
     return status ? "filled" : "outlined";
   };
