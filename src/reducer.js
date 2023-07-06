@@ -7,13 +7,21 @@ const filterCallback = {
   3: (elem) =>
     elem.upvote / elem.downvote >= 1 && elem.upvote / elem.downvote < 1.5,
 };
+
+const INITIAL_POPUP_STATUS = {
+  open: false,
+  msg: "",
+  signal: "",
+};
+
 const INITIAL_STATE = {
   posts: [],
   filteredPosts: [],
   users: [],
-  isLoggedIn: false,
-  successMsg: "",
   currentUser: { username: "", password: "", firstName: "" },
+  popUp: INITIAL_POPUP_STATUS,
+  currentFilter: Object.keys(filterObject)[1],
+  isLoggedIn: false,
 };
 
 export const postReducer = (state = INITIAL_STATE, action = {}) => {
@@ -22,42 +30,50 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
       return {
         ...state,
         posts: [...action.payload.posts],
-        filteredPosts: filterObject["Best"]["filterThePosts"](
+        filteredPosts: filterObject[state.currentFilter]["filterThePosts"](
           action.payload.posts
         ),
         users: [...action.payload.users],
       };
 
     case "upvote":
+      const updatedArrayUpvote = state.posts.map((post) =>
+        post.id === action.payload.id
+          ? {
+              ...post,
+              upvote: !post.voteStatus
+                ? action.payload.upvote + 1
+                : action.payload.upvote,
+              voteStatus: true,
+            }
+          : post
+      );
       return {
         ...state,
-        posts: state.posts.map((post) =>
-          post.id === action.payload.id
-            ? {
-                ...post,
-                upvote: !post.voteStatus
-                  ? action.payload.upvote + 1
-                  : action.payload.upvote,
-                voteStatus: true,
-              }
-            : post
-        ),
+        posts: updatedArrayUpvote,
+        filteredPosts:
+          filterObject[state.currentFilter].filterThePosts(updatedArrayUpvote),
       };
 
     case "downvote":
+      const updatedArrayDownvote = state.posts.map((post) =>
+        post.id === action.payload.id
+          ? {
+              ...post,
+              downvote: !post.voteStatus
+                ? action.payload.downvote + 1
+                : action.payload.downvote,
+              voteStatus: true,
+            }
+          : post
+      );
       return {
         ...state,
-        posts: state.posts.map((post) =>
-          post.id === action.payload.id
-            ? {
-                ...post,
-                downvote: !post.voteStatus
-                  ? action.payload.downvote + 1
-                  : action.payload.downvote,
-                voteStatus: true,
-              }
-            : post
-        ),
+        posts: updatedArrayDownvote,
+        filteredPosts:
+          filterObject[state.currentFilter].filterThePosts(
+            updatedArrayDownvote
+          ),
       };
 
     case "addPost":
@@ -80,6 +96,7 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
       return {
         ...state,
         filteredPosts: filterObject[action.payload].filterThePosts(state.posts),
+        currentFilter: action.payload,
       };
 
     case "loginUser":
@@ -124,7 +141,15 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
       };
 
     case "setMsg":
-      return { ...state, successMsg: action.payload.msg };
+      return {
+        ...state,
+        popUp: { ...state.popUp, open: true, ...action.payload },
+      };
+    case "closeModal":
+      return {
+        ...state,
+        popUp: { ...state.popUp, ...INITIAL_POPUP_STATUS },
+      };
   }
 
   return state;

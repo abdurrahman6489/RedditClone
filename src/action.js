@@ -65,9 +65,15 @@ export const userLogout = () => {
   };
 };
 
-export const setMsg = (msg) => {
+export const setMsg = (msg, signal) => {
   return {
     type: "setMsg",
-    payload: { msg },
+    payload: { msg, signal },
+  };
+};
+
+export const closeModal = () => {
+  return {
+    type: "closeModal",
   };
 };

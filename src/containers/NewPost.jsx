@@ -1,8 +1,4 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addPost, setMsg } from "../action";
-import { useNavigate } from "react-router-dom";
-import { routepath } from "../routepaths";
 import {
   Container,
   Typography,
@@ -15,6 +11,13 @@ import {
 } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
+
+import { useDispatch } from "react-redux";
+import { addPost, setMsg } from "../action";
+import { useNavigate } from "react-router-dom";
+import { routepath } from "../routepaths";
+import { signalProps } from "../utils";
+
 const FORM_CONTAINER_STYLE = {
   maxWidth: "95%",
   width: "90%",
@@ -23,25 +26,30 @@ const FORM_CONTAINER_STYLE = {
 };
 
 const SUCCESS_NAVIGATE_PAGE = routepath.home;
+const { success } = signalProps;
 const NewPost = () => {
   const [post, setPost] = useState({ title: "", description: "", url: "" });
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleChange = (event) => {
     setPost((oldPost) => ({
       ...oldPost,
       [event.target.name]: event.target.value,
     }));
   };
+
   const handleFileSelect = (event) => {
     let value = URL.createObjectURL(event.target.files[0]);
     setPost((oldPost) => ({ ...oldPost, url: value }));
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const { title, description, url } = post;
     if (Object.keys(post).some((key) => post[key].length == 0)) return;
-    dispatch(setMsg("Post added successfully"));
+    dispatch(setMsg("Post added successfully", success));
     dispatch(addPost({ title, description, url }));
     navigate(SUCCESS_NAVIGATE_PAGE);
     setPost({ title: "", description: "", url: "" });

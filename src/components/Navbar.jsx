@@ -16,20 +16,31 @@ import RedditIcon from "@mui/icons-material/Reddit";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { routepath } from "../routepaths";
-import { userLogout } from "../action";
-
-// const pages = ["Create Post", "Login", "Signup"];
+import { userLogout, setMsg } from "../action";
+import { signalProps } from "../utils";
 const pages = [
   { routename: "Create Post", path: routepath.createPost },
   { routename: "Login", path: routepath.login },
   { routename: "Signup", path: routepath.signup },
 ];
 
+const SUCCESS_PATH = routepath.createPost;
+const LOGIN_PATH = routepath.login;
+const SIGNUP_PATH = routepath.signup;
+const { warning } = signalProps;
+
 const Navbar = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const username = useSelector((state) => state.currentUser.firstName);
   const userFirstLetter = username.charAt(0).toUpperCase();
+  const handleClick = () => {
+    if (!isLoggedIn) {
+      dispatch(setMsg("You are not logged in, please login first", warning));
+      navigate(LOGIN_PATH);
+      return;
+    }
+  };
 
   return (
     <AppBar position="static" sx={{ mb: "3vh" }}>
@@ -56,16 +67,18 @@ const Navbar = () => {
             reddit
           </Typography>
           <Stack spacing={2} direction="row">
-            <Link to={isLoggedIn ? routepath.createPost : routepath.login}>
-              <Button sx={{ color: "#fff" }}>Create Post</Button>
+            <Link to={isLoggedIn ? SUCCESS_PATH : LOGIN_PATH}>
+              <Button sx={{ color: "#fff" }} onClick={handleClick}>
+                Create Post
+              </Button>
             </Link>
             {!isLoggedIn && (
-              <Link to={routepath.login}>
+              <Link to={LOGIN_PATH}>
                 <Button sx={{ color: "#fff" }}>Login</Button>
               </Link>
             )}
             {!isLoggedIn && (
-              <Link to={routepath.signup}>
+              <Link to={SIGNUP_PATH}>
                 <Button sx={{ color: "#fff" }}>Signup</Button>
               </Link>
             )}

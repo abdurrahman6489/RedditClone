@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addUser, setMsg } from "../action";
-import { useNavigate } from "react-router-dom";
+import { signalProps } from "../utils";
 import { routepath } from "../routepaths";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import {
@@ -20,8 +20,7 @@ import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 const SUCCESS_NAVIGATE_PAGE = routepath.home;
 const LOGIN_PAGE = routepath.login;
 let currentPath = SUCCESS_NAVIGATE_PAGE;
-let currentMsg = "Registration successful";
-
+const { success, warning } = signalProps;
 const FORM_CONTAINER_STYLE = {
   maxWidth: "95%",
   width: "90%",
@@ -58,16 +57,25 @@ const SignupPage = () => {
     }
     const { username, password, firstName, lastName } = user;
     const userIndex = users.findIndex(
-      (currentUser) =>
-        currentUser.username == username && currentUser.password == password
+      (currentUser) => currentUser.username == username
     );
     if (userIndex == -1) {
+      dispatch(
+        setMsg(
+          `Congratulations ${firstName}, You are successfully registered`,
+          success
+        )
+      );
       dispatch(addUser({ username, password, firstName, lastName }));
     } else {
       currentPath = LOGIN_PAGE;
-      currentMsg = "You are already registered, login from here";
+      dispatch(
+        setMsg(
+          `You are already registered ${users[userIndex].firstName}, login from here`,
+          warning
+        )
+      );
     }
-    dispatch(setMsg(currentMsg));
     navigate(currentPath);
     setUser(INITIAL_STATE);
   };

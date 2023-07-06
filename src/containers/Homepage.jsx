@@ -85,14 +85,16 @@ const Homepage = () => {
             onChange={handleChange}
           >
             {selectTagProps?.map((prop) => (
-              <MenuItem value={prop.value}>{prop.content}</MenuItem>
+              <MenuItem value={prop.value} key={prop.value}>
+                {prop.content}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
       </Stack>
       <div style={GRID_STYLES}>
         {filteredPosts?.map((post) => (
-          <Post {...post} />
+          <Post {...post} key={post.id} />
         ))}
       </div>
     </Container>
