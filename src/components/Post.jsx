@@ -60,7 +60,7 @@ const Post = ({
       navigate(LOGIN_PATH);
       return;
     }
-    navigate(`${SUCCESS_PATH}/:${id}`);
+    navigate(`${SUCCESS_PATH}/${id}`);
   };
   return (
     <>

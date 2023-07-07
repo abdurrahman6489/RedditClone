@@ -38,6 +38,7 @@ const SinglePost = () => {
 
   useEffect(() => {
     let id = params.id;
+    console.log(id);
     let selectedId = Number(id.substring(1));
     console.log(typeof selectedId, selectedId);
     const index = posts.findIndex((post) => post.id == selectedId);
