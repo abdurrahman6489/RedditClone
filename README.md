@@ -27,7 +27,8 @@
 4. Then the user can raed posts, create posts or upvote or downvote a post.
 5. If the user clicks on any post, he is redirected to that post with showing title, image and description, the user can vote from there also. (Sharing or commenting a post is under process)
 6. The user can also create Post by clicking on Create Post on the top Navbar. That post is shown as the first post
-7. At last user can also logout from there.
+7. User can also logout from there. By doing so the App gets restored to its initial state.
+8. There are confirmation and warning messages showin to user using Popups to increase user's interaction with the App.
 
 
 
