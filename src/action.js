@@ -26,6 +26,20 @@ export const addPost = ({ title, description, url }) => {
   };
 };
 
+export const filterPost = (label) => {
+  return {
+    type: "filterPost",
+    payload: label,
+  };
+};
+
+export const getSelectedPost = (id) => {
+  return {
+    type: "getSelectedPost",
+    payload: { id },
+  };
+};
+
 export const loginUser = (username, password, index) => {
   return {
     type: "loginUser",
@@ -49,13 +63,6 @@ export const addUser = ({ username, password, firstName, lastName }) => {
   return {
     type: "addUser",
     payload: { username, password, firstName, lastName },
-  };
-};
-
-export const filterPost = (label) => {
-  return {
-    type: "filterPost",
-    payload: label,
   };
 };
 

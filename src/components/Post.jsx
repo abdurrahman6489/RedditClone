@@ -12,7 +12,12 @@ import { ArrowDownward } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { changeDownvote, changeUpvote, setMsg } from "../action";
+import {
+  changeDownvote,
+  changeUpvote,
+  setMsg,
+  getSelectedPost,
+} from "../action";
 import { routepath } from "../routepaths";
 import { signalProps } from "../utils";
 
@@ -60,6 +65,7 @@ const Post = ({
       navigate(LOGIN_PATH);
       return;
     }
+    dispatch(getSelectedPost(id));
     navigate(`${SUCCESS_PATH}/${id}`);
   };
   return (

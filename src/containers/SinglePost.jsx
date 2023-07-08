@@ -27,28 +27,15 @@ const FORM_CONTAINER_STYLE = {
 };
 
 const SinglePost = () => {
-  const posts = useSelector((state) => state.posts);
-  const params = useParams();
+  const selectedPost = useSelector((state) => state.selectedPost);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
 
-  const [postData, setPostData] = useState({});
   const [comment, setComment] = useState("");
 
-  useEffect(() => {
-    let id = params.id;
-    console.log(id);
-    let selectedId = Number(id.substring(1));
-    console.log(typeof selectedId, selectedId);
-    const index = posts.findIndex((post) => post.id == selectedId);
-    console.log(index);
-    console.log(posts[index]);
-    setPostData((obj) => posts[index]);
-  }, [params.id]);
-
   const { title, description, url, upvote, downvote, voteStatus, id } =
-    postData;
+    selectedPost;
   const voted = voteStatus;
   const BTN_STYLE = voted ? "filled" : "outlined";
 

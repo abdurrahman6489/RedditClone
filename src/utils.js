@@ -61,8 +61,35 @@ export const chipProps = Object.keys(filterObject)
 export const selectTagProps = Object.keys(filterObject)
   .filter((elem, index) => index > 4)
   .map((selectProp) => {
-    const { label, color } = filterObject[selectProp];
+    const { label } = filterObject[selectProp];
     return { value: label, content: label };
   });
 
 export const signalProps = { warning: "warning", success: "success" };
+
+export const changeVote = {
+  changeUpvote: (posts, action) =>
+    posts.map((post) =>
+      post.id === action.payload.id
+        ? {
+            ...post,
+            upvote: !post.voteStatus
+              ? action.payload.upvote + 1
+              : action.payload.upvote,
+            voteStatus: true,
+          }
+        : post
+    ),
+  changeDownvote: (posts, action) =>
+    posts.map((post) =>
+      post.id === action.payload.id
+        ? {
+            ...post,
+            downvote: !post.voteStatus
+              ? action.payload.downvote + 1
+              : action.payload.downvote,
+            voteStatus: true,
+          }
+        : post
+    ),
+};
