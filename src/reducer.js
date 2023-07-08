@@ -39,15 +39,15 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
 
     case "upvote": //state.posts
       const updatedArrayUpvote = changeVote.changeUpvote(state.posts, action);
-      const curentUpvotePost = state.posts.find(
-        (post) => post.id === action.payload.id
-      );
+      const currentUpvotePost = updatedArrayUpvote
+        .slice()
+        .find((post) => post.id == action.payload.id);
       return {
         ...state,
         posts: updatedArrayUpvote,
         filteredPosts:
           filterObject[state.currentFilter].filterThePosts(updatedArrayUpvote),
-        selectedPost: { ...state.selectedPost, curentUpvotePost },
+        selectedPost: { ...state.selectedPost, currentUpvotePost },
       };
 
     case "downvote":
@@ -55,9 +55,9 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
         state.posts,
         action
       );
-      const curentDownvotePost = state.posts.find(
-        (post) => post.id === action.payload.id
-      );
+      const currentDownvotePost = updatedArrayDownvote
+        .slice()
+        .find((post) => post.id == action.payload.id);
       return {
         ...state,
         posts: updatedArrayDownvote,

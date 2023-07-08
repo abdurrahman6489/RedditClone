@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { changeDownvote, changeUpvote } from "../action";
 import { useNavigate, useParams } from "react-router-dom";
@@ -21,35 +21,51 @@ import ShareIcon from "@mui/icons-material/Share";
 const FORM_CONTAINER_STYLE = {
   maxWidth: "95%",
   width: "90%",
-  aspectRatio: "1/1.5",
+  aspectRatio: "1/0.3",
   mt: "3vh",
   padding: "1em",
 };
 
+const Single_Post_Path = routepath.singlepost;
+
 const SinglePost = () => {
   const selectedPost = useSelector((state) => state.selectedPost);
+  const { id } = useParams();
+  useLayoutEffect(() => {
+    setCurrentPost((obj) => ({ ...selectedPost }));
+  }, [id]);
+
+  const [comment, setComment] = useState("");
+  const [currentPost, setCurrentPost] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
 
-  const [comment, setComment] = useState("");
-
-  const { title, description, url, upvote, downvote, voteStatus, id } =
-    selectedPost;
+  const {
+    title,
+    description,
+    url,
+    upvote,
+    downvote,
+    voteStatus,
+    id: currentId,
+  } = currentPost || selectedPost;
+  // const { title, description, url, upvote, downvote, voteStatus, id } = currentPost || seleted;
+  console.log(title, upvote);
   const voted = voteStatus;
   const BTN_STYLE = voted ? "filled" : "outlined";
 
-  const handleVote = (name) => {
+  const handleVote = (name, event) => {
+    event.preventDefault();
     if (!isLoggedIn) {
       navigate(LOGIN_PATH);
       return;
     }
     console.log(name);
     if (name == "Upvote") {
-      dispatch(changeUpvote({ id, upvote }));
-      return;
-    }
-    dispatch(changeDownvote({ id, downvote }));
+      dispatch(changeUpvote({ currentId, upvote }));
+    } else dispatch(changeDownvote({ currentId, downvote }));
+    // navigate(`${Single_Post_Path}/${id}`);
   };
 
   if (!title) return <div>No data found</div>;
@@ -86,7 +102,8 @@ const SinglePost = () => {
               label={`Upvote ${upvote}`}
               color="success"
               variant={BTN_STYLE}
-              onClick={() => handleVote("Upvote")}
+              onClick={(event) => handleVote("Upvote", event)}
+              key={"upvote"}
             />
             <Chip
               icon={<ArrowDownward />}
@@ -94,6 +111,7 @@ const SinglePost = () => {
               color="error"
               variant={BTN_STYLE}
               onClick={() => handleVote("Downvote")}
+              key={"downvote"}
             />
             <Chip icon={<ShareIcon />} label="Share" color="info" />
           </Stack>

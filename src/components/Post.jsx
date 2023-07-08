@@ -39,9 +39,12 @@ const Post = ({
 
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const selectedPost = useSelector((state) => state.selectedPost);
 
   const voted = voteStatus;
   const BTN_STYLE = voted ? "contained" : "outlined";
+
+  console.log("from Post file ", upvote);
 
   const handleVote = (event) => {
     event.stopPropagation();
@@ -66,7 +69,9 @@ const Post = ({
       return;
     }
     dispatch(getSelectedPost(id));
-    navigate(`${SUCCESS_PATH}/${id}`);
+    navigate(`${SUCCESS_PATH}/${id}`, {
+      state: { ...selectedPost },
+    });
   };
   return (
     <>

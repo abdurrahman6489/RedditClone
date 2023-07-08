@@ -16,6 +16,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 function App() {
   useLocalStorage();
   const { home, login, signup, createPost, singlepost } = routepath;
+  const selectedPost = useSelector((state) => state.selectedPost);
   const modalOpen = useSelector((state) => state.popUp.open);
   const router = createBrowserRouter([
     {
@@ -46,7 +47,7 @@ function App() {
       path: `${singlepost}/:id`,
       element: (
         <Layout>
-          <SinglePost />
+          <SinglePost {...selectedPost} />
         </Layout>
       ),
     },

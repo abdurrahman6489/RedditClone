@@ -16,7 +16,8 @@ export default function useLocalStorage() {
 
   const posts = useSelector((state) => state.posts);
   const users = useSelector((state) => state.users);
-
+  const selectedPost = useSelector((state) => state.selectedPost);
+  const { upvote, downvote } = selectedPost;
   const fetchApi = async () => {
     const response = await fetch(POST_URL);
     const data = await response.json();
@@ -46,7 +47,8 @@ export default function useLocalStorage() {
   useEffect(() => {
     saveDatatoLocalStorage(POST_KEY, posts);
     saveDatatoLocalStorage(USERS_KEY, users);
-  }, [posts, users]);
+    console.log("from custom hook file ", upvote);
+  }, [posts, users, upvote, downvote]);
 }
 
 const saveDatatoLocalStorage = (KEY, data) => {
