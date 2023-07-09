@@ -47,7 +47,7 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
         posts: updatedArrayUpvote,
         filteredPosts:
           filterObject[state.currentFilter].filterThePosts(updatedArrayUpvote),
-        selectedPost: { ...state.selectedPost, currentUpvotePost },
+        selectedPost: { ...state.selectedPost, ...currentUpvotePost },
       };
 
     case "downvote":
@@ -65,7 +65,7 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
           filterObject[state.currentFilter].filterThePosts(
             updatedArrayDownvote
           ),
-        selectedPost: { ...state.selectedPost, currentDownvotePost },
+        selectedPost: { ...state.selectedPost, ...currentDownvotePost },
       };
 
     case "addPost":

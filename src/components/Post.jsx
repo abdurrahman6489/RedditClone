@@ -44,7 +44,7 @@ const Post = ({
   const voted = voteStatus;
   const BTN_STYLE = voted ? "contained" : "outlined";
 
-  console.log("from Post file ", upvote);
+  // console.log("from Post file ", upvote);
 
   const handleVote = (event) => {
     event.stopPropagation();

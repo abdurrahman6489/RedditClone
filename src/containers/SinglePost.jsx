@@ -30,41 +30,30 @@ const Single_Post_Path = routepath.singlepost;
 
 const SinglePost = () => {
   const selectedPost = useSelector((state) => state.selectedPost);
-  const { id } = useParams();
-  useLayoutEffect(() => {
-    setCurrentPost((obj) => ({ ...selectedPost }));
-  }, [id]);
-
   const [comment, setComment] = useState("");
-  const [currentPost, setCurrentPost] = useState({});
+  // const [currentPost, setCurrentPost] = useState(selectedPost);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
 
-  const {
-    title,
-    description,
-    url,
-    upvote,
-    downvote,
-    voteStatus,
-    id: currentId,
-  } = currentPost || selectedPost;
-  // const { title, description, url, upvote, downvote, voteStatus, id } = currentPost || seleted;
+  const { title, description, url, upvote, downvote, voteStatus, id } =
+    selectedPost;
   console.log(title, upvote);
   const voted = voteStatus;
   const BTN_STYLE = voted ? "filled" : "outlined";
 
-  const handleVote = (name, event) => {
-    event.preventDefault();
+  const handleVote = (name) => {
     if (!isLoggedIn) {
       navigate(LOGIN_PATH);
       return;
     }
     console.log(name);
     if (name == "Upvote") {
-      dispatch(changeUpvote({ currentId, upvote }));
-    } else dispatch(changeDownvote({ currentId, downvote }));
+      dispatch(changeUpvote({ id, upvote }));
+    } else {
+      dispatch(changeDownvote({ id, downvote }));
+    }
     // navigate(`${Single_Post_Path}/${id}`);
   };
 
@@ -102,7 +91,7 @@ const SinglePost = () => {
               label={`Upvote ${upvote}`}
               color="success"
               variant={BTN_STYLE}
-              onClick={(event) => handleVote("Upvote", event)}
+              onClick={() => handleVote("Upvote")}
               key={"upvote"}
             />
             <Chip
