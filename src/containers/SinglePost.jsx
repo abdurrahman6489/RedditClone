@@ -65,6 +65,7 @@ const SinglePost = () => {
 
   const handleComment = () => {
     console.log("in the handle comment function line no 68");
+    if (comment.length == 0) return;
     dispatch(addComment(comment, id));
     setComment("");
   };

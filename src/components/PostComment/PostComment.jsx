@@ -6,15 +6,25 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
+import { useSelector } from "react-redux";
 import "./PostComment.css";
 const PostComment = ({ commentList }) => {
+  const currentUsername = useSelector((state) => state.currentUser.firstName);
+  const sortedComments = commentList
+    .slice()
+    .sort(
+      (comment1, comment2) =>
+        (comment2.user == currentUsername) - (comment1.user == currentUsername)
+    );
+
+  const color = () => `hsl(${Math.floor(Math.random() * 100)}, 80%, 50%)`;
   return (
     <List
       sx={{
         maxWidth: "100%",
         width: "90%",
         bgcolor: "background.paper",
-        aspectRatio: "5/1",
+        aspectRatio: "4/1",
         overflow: "auto",
         textAlign: "center",
         // border: "1px solid black",
@@ -23,15 +33,18 @@ const PostComment = ({ commentList }) => {
       }}
       className="list"
     >
-      {commentList?.map((item, index) => {
+      {sortedComments?.map((item, index) => {
         const { user, comment } = item;
         const usernameFirstLetter = user.split("")[0].toUpperCase();
+        const currentColor = color();
         return (
           <>
             {index > 0 && <Divider variant="inset" component="li" />}
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
-                <Avatar alt="Remy Sharp">{usernameFirstLetter}</Avatar>
+                <Avatar sx={{ bgcolor: currentColor }}>
+                  {usernameFirstLetter}
+                </Avatar>
               </ListItemAvatar>
               <ListItemText
                 primary={comment}
@@ -45,6 +58,7 @@ const PostComment = ({ commentList }) => {
                     >
                       {user}
                     </Typography>
+                    {user == currentUsername && " (you)"}
                   </React.Fragment>
                 }
               />
