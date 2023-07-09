@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { changeDownvote, changeUpvote } from "../action";
+import { changeDownvote, changeUpvote, addComment } from "../action";
 import { useNavigate, useParams } from "react-router-dom";
 import { routepath } from "../routepaths";
+import PostComment from "../components/PostComment/PostComment";
 import {
   Typography,
   Container,
@@ -17,21 +18,21 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { ArrowDownward } from "@mui/icons-material";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ShareIcon from "@mui/icons-material/Share";
+import CommentIcon from "@mui/icons-material/Comment";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 const FORM_CONTAINER_STYLE = {
   maxWidth: "95%",
   width: "90%",
-  aspectRatio: "1/0.3",
+  aspectRatio: "4/1",
   mt: "3vh",
-  padding: "1em",
+  // border: "1px solid black",
 };
-
-const Single_Post_Path = routepath.singlepost;
 
 const SinglePost = () => {
   const selectedPost = useSelector((state) => state.selectedPost);
+  const comments = useSelector((state) => state.comments);
   const [comment, setComment] = useState("");
-  // const [currentPost, setCurrentPost] = useState(selectedPost);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -39,7 +40,9 @@ const SinglePost = () => {
 
   const { title, description, url, upvote, downvote, voteStatus, id } =
     selectedPost;
-  console.log(title, upvote);
+  const allComments = comments[id] || [];
+  // console.log(allComments);
+  // console.log(title, upvote);
   const voted = voteStatus;
   const BTN_STYLE = voted ? "filled" : "outlined";
 
@@ -48,15 +51,23 @@ const SinglePost = () => {
       navigate(LOGIN_PATH);
       return;
     }
-    console.log(name);
+    // console.log(name);
     if (name == "Upvote") {
       dispatch(changeUpvote({ id, upvote }));
     } else {
       dispatch(changeDownvote({ id, downvote }));
     }
-    // navigate(`${Single_Post_Path}/${id}`);
   };
 
+  const clearComment = () => {
+    if (comment.length > 0) setComment("");
+  };
+
+  const handleComment = () => {
+    console.log("in the handle comment function line no 68");
+    dispatch(addComment(comment, id));
+    setComment("");
+  };
   if (!title) return <div>No data found</div>;
   return (
     <Container maxWidth="sm" sx={{ mt: "10vh", textAlign: "center" }}>
@@ -104,6 +115,7 @@ const SinglePost = () => {
             />
             <Chip icon={<ShareIcon />} label="Share" color="info" />
           </Stack>
+
           <FormControl sx={FORM_CONTAINER_STYLE}>
             <TextField
               type="text"
@@ -111,14 +123,33 @@ const SinglePost = () => {
               label="comment"
               value={comment}
               color="success"
-              sx={{ mt: "2vh" }}
-              onClick={(event) => setComment(event.target.value)}
+              onChange={(event) => setComment(event.target.value)}
             />
-
-            <Button variant="contained" color="success" sx={{ mt: "2vh" }}>
-              comment
-            </Button>
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={{ ml: "2vw", mt: "2vh" }}
+              alignItems={"center"}
+              justifyContent={"flex-end"}
+            >
+              <Chip
+                icon={<CommentIcon />}
+                variant="outlined"
+                color="success"
+                label="comment"
+                onClick={handleComment}
+              />
+              <Chip
+                icon={<DeleteOutlineIcon />}
+                variant="outlined"
+                color="info"
+                label="Delete"
+                sx={{ mt: "2vh" }}
+                onClick={clearComment}
+              />
+            </Stack>
           </FormControl>
+          <PostComment commentList={allComments} />
         </Grid>
       </Grid>
     </Container>

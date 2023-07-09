@@ -69,9 +69,7 @@ const Post = ({
       return;
     }
     dispatch(getSelectedPost(id));
-    navigate(`${SUCCESS_PATH}/${id}`, {
-      state: { ...selectedPost },
-    });
+    navigate(`${SUCCESS_PATH}/${id}`);
   };
   return (
     <>

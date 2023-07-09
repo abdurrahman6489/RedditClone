@@ -1,4 +1,4 @@
-import { filterObject, changeVote } from "./utils";
+import { filterObject, changeVote, updateComments } from "./utils";
 const filterCallback = {
   0: (elem) => true,
   1: (elem) => elem.upvote / elem.downvote > 3,
@@ -18,6 +18,7 @@ const INITIAL_STATE = {
   posts: [],
   filteredPosts: [],
   selectedPost: {},
+  comments: {},
   users: [],
   currentUser: { username: "", password: "", firstName: "" },
   popUp: INITIAL_POPUP_STATUS,
@@ -37,7 +38,7 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
         users: [...action.payload.users],
       };
 
-    case "upvote": //state.posts
+    case "upvote":
       const updatedArrayUpvote = changeVote.changeUpvote(state.posts, action);
       const currentUpvotePost = updatedArrayUpvote
         .slice()
@@ -98,6 +99,22 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
       return {
         ...state,
         selectedPost: { ...state.selectedPost, ...curentSelectedPost },
+      };
+
+    case "addComment":
+      const { comment, id } = action.payload;
+      const newComments = updateComments(
+        state.comments,
+        comment,
+        id,
+        state.currentUser.firstName
+      );
+      return {
+        ...state,
+        comments: {
+          ...state.comments,
+          ...newComments,
+        },
       };
 
     case "loginUser":

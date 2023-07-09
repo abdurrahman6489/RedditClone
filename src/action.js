@@ -40,6 +40,13 @@ export const getSelectedPost = (id) => {
   };
 };
 
+export const addComment = (comment, id) => {
+  return {
+    type: "addComment",
+    payload: { comment, id },
+  };
+};
+
 export const loginUser = (username, password, index) => {
   return {
     type: "loginUser",

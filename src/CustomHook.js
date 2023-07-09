@@ -47,7 +47,7 @@ export default function useLocalStorage() {
   useEffect(() => {
     saveDatatoLocalStorage(POST_KEY, posts);
     saveDatatoLocalStorage(USERS_KEY, users);
-    console.log("from custom hook file ", upvote);
+    // console.log("from custom hook file ", upvote);
   }, [posts, users, upvote, downvote]);
 }
 

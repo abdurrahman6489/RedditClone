@@ -1,3 +1,5 @@
+import { all } from "axios";
+
 export const chipVariantStatus = [false, true, false, false, false];
 export const filterObject = {
   All: { label: "All", color: "primary", filterThePosts: (array) => array },
@@ -92,4 +94,15 @@ export const changeVote = {
           }
         : post
     ),
+};
+
+export const updateComments = (comments, newComment, id, user) => {
+  if (comments[id]) {
+    comments[id] = [...comments[id], { user, id, comment: newComment }];
+  } else {
+    comments[id] = [{ user, id, comment: newComment }];
+  }
+  const newCommentObject = { ...comments };
+  console.log(newCommentObject);
+  return newCommentObject;
 };
