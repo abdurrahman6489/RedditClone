@@ -75,10 +75,10 @@ export const changeVote = {
       post.id === action.payload.id
         ? {
             ...post,
-            upvote: !post.voteStatus
+            upvote: !post.upvoteStatus
               ? action.payload.upvote + 1
-              : action.payload.upvote,
-            voteStatus: true,
+              : action.payload.upvote - 1,
+            upvoteStatus: !post.upvoteStatus,
           }
         : post
     ),
@@ -87,10 +87,10 @@ export const changeVote = {
       post.id === action.payload.id
         ? {
             ...post,
-            downvote: !post.voteStatus
+            downvote: !post.downvoteStatus
               ? action.payload.downvote + 1
-              : action.payload.downvote,
-            voteStatus: true,
+              : action.payload.downvote - 1,
+            downvoteStatus: !post.downvoteStatus,
           }
         : post
     ),
@@ -100,7 +100,7 @@ export const updateComments = (comments, newComment, id, user) => {
   if (comments[id]) {
     comments[id] = [...comments[id], { user, id, comment: newComment }];
   } else {
-    comments[id] = [{ user, id, comment: newComment }];
+    comments[id] = [{ user, id, comment: newComment, date: new Date() }];
   }
   const newCommentObject = { ...comments };
   console.log(newCommentObject);

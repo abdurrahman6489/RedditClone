@@ -20,6 +20,8 @@ import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ShareIcon from "@mui/icons-material/Share";
 import CommentIcon from "@mui/icons-material/Comment";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import ThumbUpOffAltSharpIcon from "@mui/icons-material/ThumbUpOffAltSharp";
+import ThumbDownAltSharpIcon from "@mui/icons-material/ThumbDownAltSharp";
 
 const FORM_CONTAINER_STYLE = {
   maxWidth: "95%",
@@ -38,13 +40,23 @@ const SinglePost = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
 
-  const { title, description, url, upvote, downvote, voteStatus, id } =
-    selectedPost;
+  const {
+    title,
+    description,
+    url,
+    upvote,
+    downvote,
+    upvoteStatus,
+    downvoteStatus,
+    id,
+  } = selectedPost;
   const allComments = comments[id] || [];
   // console.log(allComments);
   // console.log(title, upvote);
-  const voted = voteStatus;
-  const BTN_STYLE = voted ? "filled" : "outlined";
+  const upvoted = upvoteStatus;
+  const downvoted = downvoteStatus;
+  const BTN_STYLE_upvote = upvoted ? "filled" : "outlined";
+  const BTN_STYLE_downvote = downvoted ? "filled" : "outlined";
 
   const handleVote = (name) => {
     if (!isLoggedIn) {
@@ -99,18 +111,20 @@ const SinglePost = () => {
           </Typography>
           <Stack direction="row" spacing={2} sx={{ ml: "2vw", mt: "5vh" }}>
             <Chip
-              icon={<ArrowUpwardIcon />}
+              icon={<ThumbUpOffAltSharpIcon />}
               label={`Upvote ${upvote}`}
               color="success"
-              variant={BTN_STYLE}
+              variant={BTN_STYLE_upvote}
+              sx={{ padding: "0.5em" }}
               onClick={() => handleVote("Upvote")}
               key={"upvote"}
             />
             <Chip
-              icon={<ArrowDownward />}
+              icon={<ThumbDownAltSharpIcon />}
               label={`Downvote ${downvote}`}
               color="error"
-              variant={BTN_STYLE}
+              variant={BTN_STYLE_downvote}
+              sx={{ padding: "0.5em" }}
               onClick={() => handleVote("Downvote")}
               key={"downvote"}
             />

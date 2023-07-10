@@ -4,10 +4,10 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import { ArrowDownward } from "@mui/icons-material";
+import ThumbUpOffAltSharpIcon from "@mui/icons-material/ThumbUpOffAltSharp";
+import ThumbDownAltSharpIcon from "@mui/icons-material/ThumbDownAltSharp";
+import Chip from "@mui/material/Chip";
 
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,7 +33,8 @@ const Post = ({
   upvote,
   downvote,
   username,
-  voteStatus,
+  upvoteStatus,
+  downvoteStatus,
 }) => {
   const navigate = useNavigate();
 
@@ -41,13 +42,16 @@ const Post = ({
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const selectedPost = useSelector((state) => state.selectedPost);
 
-  const voted = voteStatus;
-  const BTN_STYLE = voted ? "contained" : "outlined";
+  const upvoted = upvoteStatus;
+  const downvoted = downvoteStatus;
+  const BTN_STYLE_upvote = upvoted ? "filled" : "outlined";
+  const BTN_STYLE_downvote = downvoted ? "filled" : "outlined";
 
   // console.log("from Post file ", upvote);
 
   const handleVote = (event) => {
-    event.stopPropagation();
+    // event.stopPropagation();
+    event.stopImmediatePropagation();
     if (!isLoggedIn) {
       dispatch(setMsg("You are not logged in, please login first", warning));
       navigate(LOGIN_PATH);
@@ -101,24 +105,28 @@ const Post = ({
           </Typography>
         </CardContent>
         <CardActions sx={{ position: "absolute", bottom: 4 }}>
-          <Button
-            variant={BTN_STYLE}
+          <Chip
+            icon={<ThumbUpOffAltSharpIcon />}
+            variant={BTN_STYLE_upvote}
             color="success"
             name="Upvote"
-            onClick={handleVote}
-            startIcon={<ArrowUpwardIcon />}
-          >
-            Upvote {upvote}
-          </Button>
-          <Button
-            variant={BTN_STYLE}
+            label={`Upvote ${upvote}`}
+            sx={{ padding: "0.5em" }}
+            component="button"
+            onClick={(event) => {
+              console.log(event);
+              handleVote("Upvote");
+            }}
+          />
+          <Chip
+            variant={BTN_STYLE_downvote}
             color="error"
             name="Downvote"
-            onClick={handleVote}
-            endIcon={<ArrowDownward />}
-          >
-            Downvote {downvote}
-          </Button>
+            label={`Downvote ${downvote}`}
+            sx={{ padding: "0.5em" }}
+            onClick={() => handleVote("Downvote")}
+            icon={<ThumbDownAltSharpIcon />}
+          />
         </CardActions>
       </Card>
     </>
