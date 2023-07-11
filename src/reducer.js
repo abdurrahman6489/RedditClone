@@ -101,6 +101,12 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
         selectedPost: { ...state.selectedPost, ...curentSelectedPost },
       };
 
+    case "getAllComments":
+      return {
+        ...state,
+        comments: { ...state.comments, ...action.payload },
+      };
+
     case "addComment":
       const { comment, id } = action.payload;
       const newComments = updateComments(

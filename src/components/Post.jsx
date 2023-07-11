@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Button } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -44,14 +44,14 @@ const Post = ({
 
   const upvoted = upvoteStatus;
   const downvoted = downvoteStatus;
-  const BTN_STYLE_upvote = upvoted ? "filled" : "outlined";
-  const BTN_STYLE_downvote = downvoted ? "filled" : "outlined";
+  const BTN_STYLE_upvote = upvoted ? "contained" : "outlined";
+  const BTN_STYLE_downvote = downvoted ? "contained" : "outlined";
 
   // console.log("from Post file ", upvote);
 
   const handleVote = (event) => {
-    // event.stopPropagation();
-    event.stopImmediatePropagation();
+    event.stopPropagation();
+    // event.nativeEvent.stopImmediatePropagation();
     if (!isLoggedIn) {
       dispatch(setMsg("You are not logged in, please login first", warning));
       navigate(LOGIN_PATH);
@@ -105,28 +105,28 @@ const Post = ({
           </Typography>
         </CardContent>
         <CardActions sx={{ position: "absolute", bottom: 4 }}>
-          <Chip
-            icon={<ThumbUpOffAltSharpIcon />}
+          <Button
+            startIcon={<ThumbUpOffAltSharpIcon />}
             variant={BTN_STYLE_upvote}
             color="success"
             name="Upvote"
-            label={`Upvote ${upvote}`}
-            sx={{ padding: "0.5em" }}
-            component="button"
-            onClick={(event) => {
-              console.log(event);
-              handleVote("Upvote");
-            }}
-          />
-          <Chip
+            sx={{ padding: "0.7em", borderRadius: "1em" }}
+            size="small"
+            onClick={handleVote}
+          >
+            {upvote}
+          </Button>
+          <Button
+            endIcon={<ThumbDownAltSharpIcon />}
             variant={BTN_STYLE_downvote}
             color="error"
             name="Downvote"
-            label={`Downvote ${downvote}`}
-            sx={{ padding: "0.5em" }}
-            onClick={() => handleVote("Downvote")}
-            icon={<ThumbDownAltSharpIcon />}
-          />
+            sx={{ padding: "0.7em", borderRadius: "1em" }}
+            size="small"
+            onClick={handleVote}
+          >
+            {downvote}
+          </Button>
         </CardActions>
       </Card>
     </>

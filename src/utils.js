@@ -98,9 +98,14 @@ export const changeVote = {
 
 export const updateComments = (comments, newComment, id, user) => {
   if (comments[id]) {
-    comments[id] = [...comments[id], { user, id, comment: newComment }];
+    comments[id] = [
+      ...comments[id],
+      { user, id, comment: newComment, date: new Date().toLocaleString() },
+    ];
   } else {
-    comments[id] = [{ user, id, comment: newComment, date: new Date() }];
+    comments[id] = [
+      { user, id, comment: newComment, date: new Date().toLocaleString() },
+    ];
   }
   const newCommentObject = { ...comments };
   console.log(newCommentObject);

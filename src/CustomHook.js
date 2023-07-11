@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPostandUser } from "./action";
+import { fetchPostandUser, getAllComments } from "./action";
 
 const POST_KEY = "postData";
 const USERS_KEY = "usersData";
+const USER_COMMENT_KEY = "commentdata";
 
 const savedPostData = JSON.parse(localStorage.getItem(POST_KEY)) || [];
 const savedUsersData = JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+const commentData = JSON.parse(localStorage.getItem(USER_COMMENT_KEY)) || {};
 
 const POST_URL = "https://api.slingacademy.com/v1/sample-data/photos?limit=50";
 const USER_URL = "https://dummyjson.com/users?limit=50";
@@ -16,8 +18,7 @@ export default function useLocalStorage() {
 
   const posts = useSelector((state) => state.posts);
   const users = useSelector((state) => state.users);
-  const selectedPost = useSelector((state) => state.selectedPost);
-  const { upvote, downvote } = selectedPost;
+  const comments = useSelector((state) => state.comments);
   const fetchApi = async () => {
     const response = await fetch(POST_URL);
     const data = await response.json();
@@ -43,13 +44,17 @@ export default function useLocalStorage() {
     if (savedPostData.length > 0 && savedUsersData.length > 0) {
       dispatch(fetchPostandUser(savedPostData, savedUsersData));
     } else fetchApi();
+
+    if (Object.keys(commentData).length > 0)
+      dispatch(getAllComments(commentData));
   }, []);
 
   useEffect(() => {
     saveDatatoLocalStorage(POST_KEY, posts);
     saveDatatoLocalStorage(USERS_KEY, users);
+    saveDatatoLocalStorage(USER_COMMENT_KEY, comments);
     // console.log("from custom hook file ", upvote);
-  }, [posts, users, upvote, downvote]);
+  }, [posts, users, comments]);
 }
 
 const saveDatatoLocalStorage = (KEY, data) => {

@@ -47,6 +47,13 @@ export const addComment = (comment, id) => {
   };
 };
 
+export const getAllComments = (comments) => {
+  return {
+    type: "getAllComments",
+    payload: comments,
+  };
+};
+
 export const loginUser = (username, password, index) => {
   return {
     type: "loginUser",

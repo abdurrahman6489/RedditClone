@@ -112,7 +112,7 @@ const SinglePost = () => {
           <Stack direction="row" spacing={2} sx={{ ml: "2vw", mt: "5vh" }}>
             <Chip
               icon={<ThumbUpOffAltSharpIcon />}
-              label={`Upvote ${upvote}`}
+              label={`${upvote}`}
               color="success"
               variant={BTN_STYLE_upvote}
               sx={{ padding: "0.5em" }}
@@ -121,7 +121,7 @@ const SinglePost = () => {
             />
             <Chip
               icon={<ThumbDownAltSharpIcon />}
-              label={`Downvote ${downvote}`}
+              label={`${downvote}`}
               color="error"
               variant={BTN_STYLE_downvote}
               sx={{ padding: "0.5em" }}

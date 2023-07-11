@@ -6,16 +6,17 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+
 import { useSelector } from "react-redux";
 import "./PostComment.css";
+
 const PostComment = ({ commentList }) => {
   const currentUsername = useSelector((state) => state.currentUser.firstName);
   const sortedComments = commentList
     .slice()
-    .sort(
-      (comment1, comment2) =>
-        (comment2.user == currentUsername) - (comment1.user == currentUsername)
-    );
+    .sort((comment1, comment2) => comment2.date.localeCompare(comment1.date));
 
   const color = () => `hsl(${Math.floor(Math.random() * 100)}, 80%, 50%)`;
   return (
@@ -34,7 +35,7 @@ const PostComment = ({ commentList }) => {
       className="list"
     >
       {sortedComments?.map((item, index) => {
-        const { user, comment } = item;
+        const { user, comment, date } = item;
         const usernameFirstLetter = user.split("")[0].toUpperCase();
         const currentColor = color();
         return (
@@ -58,7 +59,13 @@ const PostComment = ({ commentList }) => {
                     >
                       {user}
                     </Typography>
-                    {user == currentUsername && " (you)"}
+                    {user == currentUsername && " (you)"} {date}
+                    <Chip
+                      icon={<DeleteOutlineIcon />}
+                      variant="outlined"
+                      color="info"
+                      sx={{ mt: "2vh" }}
+                    />
                   </React.Fragment>
                 }
               />
