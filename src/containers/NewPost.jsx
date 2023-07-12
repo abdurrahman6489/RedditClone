@@ -41,6 +41,7 @@ const NewPost = () => {
   };
 
   const handleFileSelect = (event) => {
+    console.log(event);
     let value = URL.createObjectURL(event.target.files[0]);
     setPost((oldPost) => ({ ...oldPost, url: value }));
   };
@@ -95,7 +96,6 @@ const NewPost = () => {
             <TextareaAutosize
               id="outlined-required"
               label="Description"
-              fullWidth
               value={post.description}
               name="description"
               color="success"

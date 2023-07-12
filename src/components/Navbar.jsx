@@ -14,7 +14,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import RedditIcon from "@mui/icons-material/Reddit";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { routepath } from "../routepaths";
 import { userLogout, setMsg } from "../action";
 import { signalProps } from "../utils";
@@ -34,6 +34,7 @@ const Navbar = () => {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const username = useSelector((state) => state.currentUser.firstName);
   const userFirstLetter = username.charAt(0).toUpperCase();
+  const navigate = useNavigate();
   const handleClick = () => {
     if (!isLoggedIn) {
       dispatch(setMsg("You are not logged in, please login first", warning));

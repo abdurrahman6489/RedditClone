@@ -162,12 +162,10 @@ const LoginPage = () => {
             </Button>
             {error && <p style={{ color: "red" }}>{error}</p>}
           </FormControl>
-          <Typography variant="body2">
-            Not an existing user yet?
-            <Link to={routepath.signup}>
-              <p style={{ color: "blue" }}>Signup</p>
-            </Link>
-          </Typography>
+          <Typography variant="body2">Not an existing user yet?</Typography>
+          <Link to={routepath.signup}>
+            <p style={{ color: "blue" }}>Signup</p>
+          </Link>
         </Grid>
       </Grid>
     </Container>
@@ -175,3 +173,4 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+ 
