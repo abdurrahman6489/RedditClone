@@ -65,7 +65,7 @@ const SinglePost = () => {
   } = selectedPost;
   const allComments = comments[id] || [];
   // console.log(allComments);
-  // console.log(title, upvote);
+  console.log(title, upvote);
   const upvoted = upvoteStatus;
   const downvoted = downvoteStatus;
   const BTN_STYLE_upvote = upvoted ? "filled" : "outlined";
