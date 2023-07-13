@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   changeDownvote,
   changeUpvote,
   addComment,
+  getAllComments,
   getSelectedPost,
 } from "../action";
 import { useNavigate, useParams } from "react-router-dom";
@@ -38,8 +39,10 @@ const FORM_CONTAINER_STYLE = {
 
 const SinglePost = () => {
   const selectedPost = useSelector((state) => state.selectedPost);
+  // const posts = useSelector((state) => state.posts);
   const comments = useSelector((state) => state.comments);
   const [comment, setComment] = useState("");
+
   let params = useParams();
 
   let postId = params.id;
@@ -47,6 +50,7 @@ const SinglePost = () => {
 
   useEffect(() => {
     dispatch(getSelectedPost(parseInt(postId)));
+    // dispatch(getAllComments(comments));
   }, []);
 
   const navigate = useNavigate();
