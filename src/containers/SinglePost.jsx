@@ -1,6 +1,11 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { changeDownvote, changeUpvote, addComment } from "../action";
+import {
+  changeDownvote,
+  changeUpvote,
+  addComment,
+  getSelectedPost,
+} from "../action";
 import { useNavigate, useParams } from "react-router-dom";
 import { routepath } from "../routepaths";
 import PostComment from "../components/PostComment/PostComment";
@@ -35,6 +40,14 @@ const SinglePost = () => {
   const selectedPost = useSelector((state) => state.selectedPost);
   const comments = useSelector((state) => state.comments);
   const [comment, setComment] = useState("");
+  let params = useParams();
+
+  let postId = params.id;
+  console.log(postId);
+
+  useEffect(() => {
+    dispatch(getSelectedPost(parseInt(postId)));
+  }, []);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -57,6 +70,7 @@ const SinglePost = () => {
   const downvoted = downvoteStatus;
   const BTN_STYLE_upvote = upvoted ? "filled" : "outlined";
   const BTN_STYLE_downvote = downvoted ? "filled" : "outlined";
+  const LOGIN_PATH = routepath.login;
 
   const handleVote = (name) => {
     if (!isLoggedIn) {
@@ -81,7 +95,6 @@ const SinglePost = () => {
     dispatch(addComment(comment, id));
     setComment("");
   };
-  if (!title) return <div>No data found</div>;
   return (
     <Container maxWidth="sm" sx={{ mt: "10vh", textAlign: "center" }}>
       <Chip

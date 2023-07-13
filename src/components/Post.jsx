@@ -40,7 +40,6 @@ const Post = ({
 
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
-  const selectedPost = useSelector((state) => state.selectedPost);
 
   const upvoted = upvoteStatus;
   const downvoted = downvoteStatus;
@@ -51,12 +50,13 @@ const Post = ({
 
   const handleVote = (event) => {
     event.stopPropagation();
-    // event.nativeEvent.stopImmediatePropagation();
+
     if (!isLoggedIn) {
       dispatch(setMsg("You are not logged in, please login first", warning));
       navigate(LOGIN_PATH);
       return;
     }
+
     let name = event.target.name;
     console.log(name);
     if (name == "Upvote") {

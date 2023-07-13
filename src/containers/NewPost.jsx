@@ -45,6 +45,7 @@ const NewPost = () => {
     let file = event.target.files[0];
     // let value = URL.createObjectURL(event.target.files[0]);
     // setPost((oldPost) => ({ ...oldPost, url: value }));
+    //URL.createObjectURL was not working properly
     var reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = function () {

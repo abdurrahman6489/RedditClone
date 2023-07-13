@@ -18,7 +18,6 @@ const PostComment = ({ commentList }) => {
     .slice()
     .sort((comment1, comment2) => comment2.date.localeCompare(comment1.date));
 
-  const color = () => `hsl(${Math.floor(Math.random() * 100)}, 80%, 50%)`;
   return (
     <List
       sx={{
@@ -35,17 +34,14 @@ const PostComment = ({ commentList }) => {
       className="list"
     >
       {sortedComments?.map((item, index) => {
-        const { user, comment, date } = item;
+        const { user, comment, date, color } = item;
         const usernameFirstLetter = user.split("")[0].toUpperCase();
-        const currentColor = color();
         return (
           <>
             {index > 0 && <Divider variant="inset" component="li" />}
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
-                <Avatar sx={{ bgcolor: currentColor }}>
-                  {usernameFirstLetter}
-                </Avatar>
+                <Avatar sx={{ bgcolor: color }}>{usernameFirstLetter}</Avatar>
               </ListItemAvatar>
               <ListItemText
                 primary={comment}

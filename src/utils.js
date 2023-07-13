@@ -100,14 +100,28 @@ export const updateComments = (comments, newComment, id, user) => {
   if (comments[id]) {
     comments[id] = [
       ...comments[id],
-      { user, id, comment: newComment, date: new Date().toLocaleString() },
+      {
+        user,
+        id,
+        comment: newComment,
+        date: new Date().toLocaleString(),
+        color: color(),
+      },
     ];
   } else {
     comments[id] = [
-      { user, id, comment: newComment, date: new Date().toLocaleString() },
+      {
+        user,
+        id,
+        comment: newComment,
+        date: new Date().toLocaleString(),
+        color: color(),
+      },
     ];
   }
   const newCommentObject = { ...comments };
   console.log(newCommentObject);
   return newCommentObject;
 };
+
+const color = () => `hsl(${Math.floor(Math.random() * 100)}, 80%, 50%)`;
