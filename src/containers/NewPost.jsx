@@ -42,8 +42,18 @@ const NewPost = () => {
 
   const handleFileSelect = (event) => {
     console.log(event);
-    let value = URL.createObjectURL(event.target.files[0]);
-    setPost((oldPost) => ({ ...oldPost, url: value }));
+    let file = event.target.files[0];
+    // let value = URL.createObjectURL(event.target.files[0]);
+    // setPost((oldPost) => ({ ...oldPost, url: value }));
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      console.log(reader.result);
+      setPost((oldPost) => ({ ...oldPost, url: reader.result }));
+    };
+    reader.onerror = function (error) {
+      console.log("error ", error);
+    };
   };
 
   const handleSubmit = (event) => {
