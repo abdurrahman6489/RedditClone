@@ -49,10 +49,10 @@ const SinglePost = () => {
   let postId = params.id;
   console.log(postId);
 
-  useEffect(() => {
-    dispatch(getSelectedPost(parseInt(postId)));
-    // dispatch(getAllComments(comments));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getSelectedPost(parseInt(postId)));
+  //   // dispatch(getAllComments(comments));
+  // }, []);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();

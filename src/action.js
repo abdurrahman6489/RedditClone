@@ -63,9 +63,9 @@ export const loginUser = (username, password, index) => {
 };
 
 export const loginWithGoogle = (
-  googleUsername,
-  googleFirstName,
-  googleLastName
+  googleUsername = "",
+  googleFirstName = "",
+  googleLastName = ""
 ) => {
   return {
     type: "loginWithGoogle",
