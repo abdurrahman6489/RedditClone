@@ -14,13 +14,15 @@ const INITIAL_POPUP_STATUS = {
   signal: "",
 };
 
+const INITIAL_CURRENT_USER = { username: "", password: "", firstName: "" };
+
 const INITIAL_STATE = {
   posts: [],
   filteredPosts: [],
   selectedPost: {},
   comments: {},
   users: [],
-  currentUser: { username: "", password: "", firstName: "" },
+  currentUser: INITIAL_CURRENT_USER,
   popUp: INITIAL_POPUP_STATUS,
   currentFilter: Object.keys(filterObject)[1],
   isLoggedIn: false,
@@ -161,6 +163,7 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
       return {
         ...state,
         filteredPosts: filterObject["Best"]["filterThePosts"](state.posts),
+        currentUser: { ...state.currentUser, INITIAL_CURRENT_USER },
         isLoggedIn: false,
       };
 
