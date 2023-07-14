@@ -163,7 +163,7 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
       return {
         ...state,
         filteredPosts: filterObject["Best"]["filterThePosts"](state.posts),
-        currentUser: { ...state.currentUser, INITIAL_CURRENT_USER },
+        currentUser: { ...state.currentUser, ...INITIAL_CURRENT_USER },
         isLoggedIn: false,
       };
 
