@@ -39,6 +39,7 @@ const FORM_CONTAINER_STYLE = {
 
 const SinglePost = () => {
   const selectedPost = useSelector((state) => state.selectedPost);
+  // console.log(selectedPost);
   // const posts = useSelector((state) => state.posts);
   const comments = useSelector((state) => state.comments);
   const [comment, setComment] = useState("");
