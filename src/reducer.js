@@ -172,6 +172,7 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
         ...state,
         popUp: { ...state.popUp, open: true, ...action.payload },
       };
+
     case "closeModal":
       return {
         ...state,
