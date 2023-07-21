@@ -10,6 +10,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { routepath } from "../routepaths";
 import PostComment from "../components/PostComment/PostComment";
+import Comment from "../components/PostComment/Comment";
 import {
   Typography,
   Container,
@@ -20,8 +21,6 @@ import {
 } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import { ArrowDownward } from "@mui/icons-material";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ShareIcon from "@mui/icons-material/Share";
 import CommentIcon from "@mui/icons-material/Comment";
@@ -30,9 +29,9 @@ import ThumbUpOffAltSharpIcon from "@mui/icons-material/ThumbUpOffAltSharp";
 import ThumbDownAltSharpIcon from "@mui/icons-material/ThumbDownAltSharp";
 
 const FORM_CONTAINER_STYLE = {
-  maxWidth: "95%",
-  width: "90%",
-  aspectRatio: "4/1",
+  maxWidth: "99%",
+  width: "95%",
+  aspectRatio: "7/1",
   mt: "3vh",
   // border: "1px solid black",
 };
@@ -101,7 +100,7 @@ const SinglePost = () => {
     setComment("");
   };
   return (
-    <Container maxWidth="sm" sx={{ mt: "10vh", textAlign: "center" }}>
+    <Container maxWidth="lg" sx={{ mt: "10vh", textAlign: "center" }}>
       <Chip
         icon={<ArrowLeftIcon />}
         label="Home"

@@ -75,6 +75,8 @@ export const changeVote = {
       post.id === action.payload.id
         ? {
             ...post,
+            downvoteStatus: false,
+            downvote: !post.downvoteStatus ? post.downvote : post.downvote - 1,
             upvote: !post.upvoteStatus
               ? action.payload.upvote + 1
               : action.payload.upvote - 1,
@@ -87,6 +89,8 @@ export const changeVote = {
       post.id === action.payload.id
         ? {
             ...post,
+            upvoteStatus: false,
+            upvote: !post.upvoteStatus ? post.upvote : post.upvote - 1,
             downvote: !post.downvoteStatus
               ? action.payload.downvote + 1
               : action.payload.downvote - 1,
@@ -120,8 +124,20 @@ export const updateComments = (comments, newComment, id, user) => {
     ];
   }
   const newCommentObject = { ...comments };
-  console.log(newCommentObject);
+  // console.log(newCommentObject);
   return newCommentObject;
+};
+
+export const deleteComment = (comments, id, user, date) => {
+  console.log(id, date);
+  if (!comments[id]) return { ...comments };
+  comments[id].splice(
+    comments[id].findIndex(
+      (comment) => comment.user == user && comment.date == date
+    ),
+    1
+  );
+  return { ...comments };
 };
 
 const color = () => `hsl(${Math.floor(Math.random() * 100)}, 80%, 50%)`;

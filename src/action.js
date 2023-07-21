@@ -40,6 +40,13 @@ export const getSelectedPost = (id) => {
   };
 };
 
+export const getAllComments = (comments) => {
+  return {
+    type: "getAllComments",
+    payload: comments,
+  };
+};
+
 export const addComment = (comment, id) => {
   return {
     type: "addComment",
@@ -47,10 +54,10 @@ export const addComment = (comment, id) => {
   };
 };
 
-export const getAllComments = (comments) => {
+export const deleteComment = (id, date) => {
   return {
-    type: "getAllComments",
-    payload: comments,
+    type: "deleteComment",
+    payload: { id, date },
   };
 };
 

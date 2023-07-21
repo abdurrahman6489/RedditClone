@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import ThumbUpOffAltSharpIcon from "@mui/icons-material/ThumbUpOffAltSharp";
 import ThumbDownAltSharpIcon from "@mui/icons-material/ThumbDownAltSharp";
 import Chip from "@mui/material/Chip";
+import Avatar from "@mui/material/Avatar";
 
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -82,8 +83,7 @@ const Post = ({
           maxWidth: 400,
           width: 350,
           objectFit: "cover",
-          aspectRatio: 1 / 1.5,
-          position: "relative",
+          aspectRatio: 1 / 1.4,
           cursor: "pointer",
         }}
         onClick={handleClick}
@@ -91,20 +91,30 @@ const Post = ({
         <CardMedia sx={{ height: 220 }} image={url} title={title} />
         <CardContent>
           <Typography gutterBottom variant="h6" component="div">
-            {title}
+            {title.length <= 60 ? title : `${title.slice(0, 60)}...`}
           </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
-          >
-            {description}
+          <Typography variant="body2" color="text.secondary">
+            {description.length <= 60
+              ? description
+              : `${description.slice(0, 60)}...`}
           </Typography>
-          <Typography variant="h6" color="text.secondary" sx={{ mt: 2 }}>
+          {/* <Typography variant="h6" color="text.secondary" sx={{ mt: 2 }}>
             posted by : {username}
-          </Typography>
+          </Typography> */}
+          <Chip
+            avatar={
+              <Avatar
+                alt={username}
+                src="https://xsgames.co/randomusers/assets/avatars/male/0.jpg"
+              />
+            }
+            label={username}
+            variant="outlined"
+            size="medium"
+            sx={{ mt: 2 }}
+          />
         </CardContent>
-        <CardActions sx={{ position: "absolute", bottom: 4 }}>
+        <CardActions>
           <Button
             startIcon={<ThumbUpOffAltSharpIcon />}
             variant={BTN_STYLE_upvote}

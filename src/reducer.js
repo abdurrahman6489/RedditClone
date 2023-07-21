@@ -1,4 +1,9 @@
-import { filterObject, changeVote, updateComments } from "./utils";
+import {
+  filterObject,
+  changeVote,
+  updateComments,
+  deleteComment,
+} from "./utils";
 const filterCallback = {
   0: (elem) => true,
   1: (elem) => elem.upvote / elem.downvote > 3,
@@ -122,6 +127,22 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
         comments: {
           ...state.comments,
           ...newComments,
+        },
+      };
+
+    case "deleteComment":
+      const { id: currentId, date } = action.payload;
+      const updatedComments = deleteComment(
+        state.comments,
+        currentId,
+        state.currentUser.firstName,
+        date
+      );
+      return {
+        ...state,
+        comments: {
+          ...state.comments,
+          ...updatedComments,
         },
       };
 
