@@ -26,10 +26,12 @@ export const addPost = ({ title, description, url }) => {
   };
 };
 
-export const filterPost = (label) => {
+export const filterPost = (label, index, searchQuery = "") => {
   return {
     type: "filterPost",
     payload: label,
+    index,
+    searchQuery,
   };
 };
 

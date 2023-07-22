@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Typography,
@@ -12,7 +12,7 @@ import {
 import Chip from "@mui/material/Chip";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { addPost, setMsg } from "../action";
 import { useNavigate } from "react-router-dom";
 import { routepath } from "../routepaths";
@@ -26,12 +26,22 @@ const FORM_CONTAINER_STYLE = {
 };
 
 const SUCCESS_NAVIGATE_PAGE = routepath.home;
-const { success } = signalProps;
+const LOGIN_PATH = routepath.login;
+const { success, warning } = signalProps;
 const NewPost = () => {
+  const currentUser = useSelector((state) => state.currentUser);
   const [post, setPost] = useState({ title: "", description: "", url: "" });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!currentUser.username) {
+      dispatch(setMsg("You are logged out", warning));
+      navigate(SUCCESS_NAVIGATE_PAGE);
+      return;
+    }
+  }, [currentUser.username]);
 
   const handleChange = (event) => {
     setPost((oldPost) => ({

@@ -29,7 +29,9 @@ export const filterObject = {
     label: "New",
     color: "error",
     filterThePosts: (array) =>
-      array.slice().sort((post1, post2) => post2.time - post1.time),
+      array
+        .slice()
+        .sort((post1, post2) => post2.time.localeCompare(post1.time)),
   },
 
   Top: {
@@ -37,6 +39,16 @@ export const filterObject = {
     color: "info",
     filterThePosts: (array) =>
       array.slice().sort((post1, post2) => post2.upvote - post1.upvote),
+  },
+  Search: {
+    label: "Search",
+    color: "Success",
+    filterThePosts: (array, searchQuery) =>
+      array.filter(
+        (post) =>
+          post.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          post.title.toLowerCase().includes(searchQuery.toLowerCase())
+      ),
   },
 
   Home: {
@@ -53,15 +65,18 @@ export const filterObject = {
   },
 };
 
+const filterObjectLength = Object.keys(filterObject).length;
+
 export const chipProps = Object.keys(filterObject)
   .filter((elem, index) => index <= 4)
-  .map((chipProp) => {
+  .map((chipProp, index) => {
     const { label, color } = filterObject[chipProp];
-    return { label, color };
+    let status = index == 1 ? true : false;
+    return { label, color, status };
   });
 
 export const selectTagProps = Object.keys(filterObject)
-  .filter((elem, index) => index > 4)
+  .filter((elem, index) => index >= filterObjectLength - 2)
   .map((selectProp) => {
     const { label } = filterObject[selectProp];
     return { value: label, content: label };

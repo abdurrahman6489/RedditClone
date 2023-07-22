@@ -22,46 +22,42 @@ import { chipProps, chipVariantStatus, selectTagProps } from "../utils";
 
 const Homepage = () => {
   const filteredPosts = useSelector((state) => state.filteredPosts);
-  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const filtersArray = useSelector((state) => state.filtersArray);
   const dispatch = useDispatch();
-  const [variants, setVariants] = useState(chipVariantStatus);
   const [selectValue, setSelectValue] = useState(selectTagProps[0].value);
 
-  useEffect(() => {
-    if (!isLoggedIn) setVariants(chipVariantStatus);
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   if (!isLoggedIn) setVariants(chipVariantStatus);
+  // }, [isLoggedIn]);
+
   const getVariant = (status) => {
     return status ? "filled" : "outlined";
   };
 
-  const BtnClickedStatusChanged = (index) => {
-    return !variants[index];
+  const BtnClickedStatusChanged = (index, filtersArray) => {
+    return !filtersArray[index]["status"];
   };
 
   const handleChange = (event) => {
     setSelectValue(event.target.value);
     dispatch(filterPost(event.target.value));
   };
+
   return (
     <Container maxwidth="lg" sx={{ mt: "5vh" }}>
       <Grid container spacing={2} sx={{ margin: "auto", mb: "2vh" }}>
-        {chipProps?.map((prop, index) => {
-          const { label, color } = prop;
+        {filtersArray?.map((prop, index) => {
+          const { label, color, status } = prop;
           return (
             <Grid item xs={4} sm={4} md={2} lg={2}>
               <Chip
                 label={label}
-                variant={getVariant(variants[index])}
+                variant={getVariant(status)}
                 component="button"
                 color={color}
                 onClick={() => {
-                  if (BtnClickedStatusChanged(index)) {
-                    setVariants(
-                      variants.map((elem, currentIndex) =>
-                        currentIndex == index ? true : false
-                      )
-                    );
-                    dispatch(filterPost(label));
+                  if (BtnClickedStatusChanged(index, filtersArray)) {
+                    dispatch(filterPost(label, index));
                   }
                 }}
                 key={label}

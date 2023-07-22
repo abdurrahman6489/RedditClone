@@ -36,11 +36,17 @@ const Post = ({
   username,
   upvoteStatus,
   downvoteStatus,
+  userAvatar,
+  time,
 }) => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const currentUser = useSelector((state) => state.currentUser);
+  let userChipLabel =
+    username == currentUser.username ? `${username} (you)` : username;
+  const userNameFirstLetter = username.split("")[0].toUpperCase();
 
   const upvoted = upvoteStatus;
   const downvoted = downvoteStatus;
@@ -83,7 +89,7 @@ const Post = ({
           maxWidth: 400,
           width: 350,
           objectFit: "cover",
-          aspectRatio: 1 / 1.4,
+          aspectRatio: 1 / 1.5,
           cursor: "pointer",
         }}
         onClick={handleClick}
@@ -103,16 +109,20 @@ const Post = ({
           </Typography> */}
           <Chip
             avatar={
-              <Avatar
-                alt={username}
-                src="https://xsgames.co/randomusers/assets/avatars/male/0.jpg"
-              />
+              userAvatar ? (
+                <Avatar alt={username} src={userAvatar} />
+              ) : (
+                <Avatar>{userNameFirstLetter}</Avatar>
+              )
             }
-            label={username}
+            label={userChipLabel}
             variant="outlined"
             size="medium"
             sx={{ mt: 2 }}
           />
+          <Typography variant="body2" sx={{ mt: "2vh" }}>
+            {time}
+          </Typography>
         </CardContent>
         <CardActions>
           <Button

@@ -27,8 +27,8 @@ import { deepOrange } from "@mui/material/colors";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { routepath } from "../routepaths";
-import { userLogout, setMsg } from "../action";
-import { signalProps } from "../utils";
+import { userLogout, setMsg, filterPost } from "../action";
+import { signalProps, filterObject } from "../utils";
 const pages = [
   { routename: "Create Post", path: routepath.createPost },
   { routename: "Login", path: routepath.login },
@@ -79,8 +79,17 @@ const SUCCESS_PATH = routepath.createPost;
 const LOGIN_PATH = routepath.login;
 const SIGNUP_PATH = routepath.signup;
 const { warning } = signalProps;
+const searchIndex = Object.keys(filterObject).indexOf("Search");
+const searchLabel = filterObject["Search"]["label"];
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const username = useSelector((state) => state.currentUser.firstName);
+  const userFirstLetter = username.charAt(0).toUpperCase();
+  const navigate = useNavigate();
+
+  const [searchQuery, setSearchQuery] = React.useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -103,11 +112,16 @@ const Navbar = () => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.isLoggedIn);
-  const username = useSelector((state) => state.currentUser.firstName);
-  const userFirstLetter = username.charAt(0).toUpperCase();
-  const navigate = useNavigate();
+  const handleSearch = (event) => {
+    let value = event.target.value;
+    setSearchQuery(value);
+    if (value.length == 0) {
+      dispatch(filterPost("Best", 1));
+      return;
+    }
+    dispatch(filterPost(searchLabel, searchIndex, value));
+  };
+
   const handleClick = () => {
     if (!isLoggedIn) {
       dispatch(setMsg("You are not logged in, please login first", warning));
@@ -247,8 +261,12 @@ const Navbar = () => {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
+              value={searchQuery}
+              onChange={handleSearch}
               placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
+              inputProps={{
+                "aria-label": "search",
+              }}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />

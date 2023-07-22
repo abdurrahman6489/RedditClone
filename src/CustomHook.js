@@ -23,6 +23,7 @@ const currentUserData =
 
 const POST_URL = "https://api.slingacademy.com/v1/sample-data/photos?limit=50";
 const USER_URL = "https://dummyjson.com/users?limit=50";
+const userAvatarUrl = "";
 
 export default function useLocalStorage() {
   const dispatch = useDispatch();
@@ -46,7 +47,8 @@ export default function useLocalStorage() {
       upvoteStatus: false,
       downvoteStatus: false,
       username: userData.users[index].firstName,
-      time: Date.now(),
+      userAvatar: getUserAvatar(index),
+      time: new Date().toLocaleString(),
       isHomeCommunity: getFollowStatus(),
     }));
 
@@ -86,6 +88,10 @@ const saveDatatoLocalStorage = (KEY, data) => {
 
 const generateReaction = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
+};
+
+const getUserAvatar = (index) => {
+  return `https://xsgames.co/randomusers/assets/avatars/male/${index}.jpg`;
 };
 
 const getFollowStatus = () => {

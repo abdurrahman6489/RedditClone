@@ -1,5 +1,6 @@
 import {
   filterObject,
+  chipProps,
   changeVote,
   updateComments,
   deleteComment,
@@ -30,6 +31,7 @@ const INITIAL_STATE = {
   currentUser: INITIAL_CURRENT_USER,
   popUp: INITIAL_POPUP_STATUS,
   currentFilter: Object.keys(filterObject)[1],
+  filtersArray: chipProps,
   isLoggedIn: false,
 };
 
@@ -93,10 +95,19 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
       };
 
     case "filterPost":
+      const newFiltersArray = state.filtersArray.map((filter, index) =>
+        index == action.index
+          ? { ...filter, status: true }
+          : { ...filter, status: false }
+      );
       return {
         ...state,
-        filteredPosts: filterObject[action.payload].filterThePosts(state.posts),
+        filteredPosts: filterObject[action.payload].filterThePosts(
+          state.posts,
+          action.searchQuery
+        ),
         currentFilter: action.payload,
+        filtersArray: [...newFiltersArray],
       };
 
     case "getSelectedPost":
@@ -184,6 +195,7 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
       return {
         ...state,
         filteredPosts: filterObject["Best"]["filterThePosts"](state.posts),
+        filtersArray: [...chipProps],
         currentUser: { ...state.currentUser, ...INITIAL_CURRENT_USER },
         isLoggedIn: false,
       };
