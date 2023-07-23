@@ -54,6 +54,7 @@ const Search = styled("div")(({ theme }) => ({
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: "100%",
+  width: "40dvw",
   position: "absolute",
   pointerEvents: "none",
   display: "flex",
@@ -70,7 +71,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: "20ch",
+      width: "40dvw",
     },
   },
 }));
@@ -241,6 +242,7 @@ const Navbar = () => {
             component="div"
             sx={{
               mr: 2,
+              ml: "3dvw",
               display: { xs: "none", sm: "block", md: "flex" },
               fontFamily: "monospace",
               fontWeight: 700,

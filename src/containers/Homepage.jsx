@@ -7,10 +7,12 @@ import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
-import { useSelector, useDispatch } from "react-redux";
-import { filterPost } from "../action";
+
 import { chipProps, chipVariantStatus, selectTagProps } from "../utils";
 
+import { useSelector, useDispatch } from "react-redux";
+import { filterPost } from "../action";
+import Footer from "../components/Footer";
 // const GRID_STYLES = {
 //   display: "grid",
 //   gridTemplateColumns: "repeat(auto-fit, minmax(20rem,1fr)",
@@ -93,6 +95,7 @@ const Homepage = () => {
           </Grid>
         ))}
       </Grid>
+      <Footer />
     </Container>
   );
 };

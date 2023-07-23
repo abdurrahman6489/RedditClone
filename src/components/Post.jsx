@@ -21,6 +21,7 @@ import {
 } from "../action";
 import { routepath } from "../routepaths";
 import { signalProps } from "../utils";
+import CommentCount from "./CommentCount";
 
 const SUCCESS_PATH = routepath.singlepost;
 const LOGIN_PATH = routepath.login;
@@ -104,9 +105,6 @@ const Post = ({
               ? description
               : `${description.slice(0, 60)}...`}
           </Typography>
-          {/* <Typography variant="h6" color="text.secondary" sx={{ mt: 2 }}>
-            posted by : {username}
-          </Typography> */}
           <Chip
             avatar={
               userAvatar ? (
@@ -147,6 +145,7 @@ const Post = ({
           >
             {downvote}
           </Button>
+          <CommentCount id={id} />
         </CardActions>
       </Card>
     </>
