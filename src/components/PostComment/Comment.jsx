@@ -1,5 +1,4 @@
 import React from "react";
-import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -9,9 +8,9 @@ import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/Edit";
-import Divider from "@mui/material/Divider";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteComment } from "../../action";
+import { findDays } from "../../utils";
 // const Img = styled("img")({
 //   margin: "auto",
 //   display: "block",
@@ -22,6 +21,7 @@ import { deleteComment } from "../../action";
 const Comment = ({ user, comment, date, color, id }) => {
   const usernameFirstLetter = user.split("")[0].toUpperCase();
   const currentUsername = useSelector((state) => state.currentUser.firstName);
+  const dateString = findDays(date);
   const dispatch = useDispatch();
   return (
     <>
@@ -50,7 +50,7 @@ const Comment = ({ user, comment, date, color, id }) => {
                   {user} {user == currentUsername && " (you)"}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {date}
+                  {dateString}
                 </Typography>
                 <Typography gutterBottom variant="subtitle1" component="div">
                   {comment}

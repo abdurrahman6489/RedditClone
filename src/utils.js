@@ -156,3 +156,24 @@ export const deleteComment = (comments, id, user, date) => {
 };
 
 const color = () => `hsl(${Math.floor(Math.random() * 100)}, 80%, 50%)`;
+
+export function findDays(postDate) {
+  const fullDate = new Date(postDate);
+  const date = fullDate.getDate();
+  const month = fullDate.getMonth();
+  const year = fullDate.getFullYear();
+  const hour = fullDate.getHours();
+  const minutes = fullDate.getMinutes();
+  const currentDate = new Date();
+  if (currentDate.getFullYear() > year)
+    return `${currentDate.getFullYear() - year} years ago`;
+  if (currentDate.getMonth() > month)
+    return `${currentDate.getMonth() - month} months ago`;
+  if (currentDate.getDate() > date)
+    return `${currentDate.getDate() - date} days ago`;
+  if (currentDate.getHours() > hour)
+    return `${currentDate.getHours() - hour} hours ago`;
+  if (currentDate.getMinutes() > minutes)
+    return `${currentDate.getMinutes() - minutes} minutes ago`;
+  else return `Just now`;
+}

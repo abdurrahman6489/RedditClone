@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Post from "../components/Post";
+import Post from "../components/PostComponents/Post";
 import Container from "@mui/material/Container";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -95,7 +95,7 @@ const Homepage = () => {
           </Grid>
         ))}
       </Grid>
-      <Footer />
+      {/* <Footer /> */}
     </Container>
   );
 };
