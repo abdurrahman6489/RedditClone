@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   changeDownvote,
@@ -22,13 +22,15 @@ import {
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
+import { IconButton } from "@mui/material";
 import ShareIcon from "@mui/icons-material/Share";
 import CommentIcon from "@mui/icons-material/Comment";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import ThumbUpOffAltSharpIcon from "@mui/icons-material/ThumbUpOffAltSharp";
 import ThumbDownAltSharpIcon from "@mui/icons-material/ThumbDownAltSharp";
+import Tooltip from "@mui/material/Tooltip";
 
-const FORM_CONTAINER_STYLE = {
+export const FORM_CONTAINER_STYLE = {
   maxWidth: "99%",
   width: "95%",
   aspectRatio: "7/1",
@@ -48,10 +50,10 @@ const SinglePost = () => {
   let postId = params.id;
   console.log(postId);
 
-  // useEffect(() => {
-  //   dispatch(getSelectedPost(parseInt(postId)));
-  //   // dispatch(getAllComments(comments));
-  // }, []);
+  useEffect(() => {
+    dispatch(getSelectedPost(parseInt(postId)));
+    // dispatch(getAllComments(comments));
+  }, []);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -69,7 +71,7 @@ const SinglePost = () => {
   } = selectedPost;
   const allComments = comments[id] || [];
   // console.log(allComments);
-  console.log(title, upvote);
+  // console.log(title, upvote);
   const upvoted = upvoteStatus;
   const downvoted = downvoteStatus;
   const BTN_STYLE_upvote = upvoted ? "filled" : "outlined";
@@ -108,7 +110,7 @@ const SinglePost = () => {
         variant="outlined"
         onClick={() => navigate(routepath.home)}
       />
-      <Typography variant="h5" sx={{ color: "#AA4A44" }}>
+      <Typography variant="h5" sx={{ color: "#AA4A44", textWrap: "balance" }}>
         {title}
       </Typography>
       <Grid
@@ -145,7 +147,7 @@ const SinglePost = () => {
               onClick={() => handleVote("Downvote")}
               key={"downvote"}
             />
-            <Chip icon={<ShareIcon />} label="Share" color="info" />
+            {/* <Chip icon={<ShareIcon />} label="Share" color="info" /> */}
           </Stack>
 
           <FormControl sx={FORM_CONTAINER_STYLE}>
@@ -164,21 +166,34 @@ const SinglePost = () => {
               alignItems={"center"}
               justifyContent={"flex-end"}
             >
-              <Chip
-                icon={<CommentIcon />}
-                variant="outlined"
-                color="success"
-                label="comment"
-                onClick={handleComment}
-              />
-              <Chip
+              <Tooltip title="Add a Comment" placement="bottom">
+                <IconButton
+                  aria-label="comment"
+                  color="info"
+                  onClick={handleComment}
+                >
+                  <CommentIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="cancel" placement="bottom">
+                <IconButton
+                  aria-label="delete-comment"
+                  color="error"
+                  sx={{ mt: "2vh" }}
+                  onClick={clearComment}
+                >
+                  <DeleteOutlineIcon />
+                </IconButton>
+              </Tooltip>
+
+              {/* <Chip
                 icon={<DeleteOutlineIcon />}
                 variant="outlined"
-                color="info"
+                color="error"
                 label="Delete"
                 sx={{ mt: "2vh" }}
                 onClick={clearComment}
-              />
+              /> */}
             </Stack>
           </FormControl>
           <PostComment commentList={allComments} />

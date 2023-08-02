@@ -115,32 +115,26 @@ export const changeVote = {
     ),
 };
 
+const color = () => `hsl(${Math.floor(Math.random() * 100)}, 80%, 50%)`;
+
 export const updateComments = (comments, newComment, id, user) => {
+  const newCommentObj = {
+    user,
+    id,
+    comment: newComment,
+    changedText: newComment,
+    isEdit: false,
+    date: new Date().toLocaleString(),
+    color: color(),
+  };
   if (comments[id]) {
-    comments[id] = [
-      ...comments[id],
-      {
-        user,
-        id,
-        comment: newComment,
-        date: new Date().toLocaleString(),
-        color: color(),
-      },
-    ];
+    comments[id] = [...comments[id], newCommentObj];
   } else {
-    comments[id] = [
-      {
-        user,
-        id,
-        comment: newComment,
-        date: new Date().toLocaleString(),
-        color: color(),
-      },
-    ];
+    comments[id] = [newCommentObj];
   }
-  const newCommentObject = { ...comments };
-  // console.log(newCommentObject);
-  return newCommentObject;
+  const allCommentObject = { ...comments };
+  // console.log(allCommentObject);
+  return allCommentObject;
 };
 
 export const deleteComment = (comments, id, user, date) => {
@@ -155,7 +149,36 @@ export const deleteComment = (comments, id, user, date) => {
   return { ...comments };
 };
 
-const color = () => `hsl(${Math.floor(Math.random() * 100)}, 80%, 50%)`;
+export const openInputToEdit = (comments, id, user, date) => {
+  console.log(id, date);
+  if (!comments[id]) return { ...comments };
+
+  const editedComments = comments[id].map((comment) => {
+    return comment.user == user && comment.date == date
+      ? { ...comment, isEdit: true }
+      : comment;
+  });
+  comments[id] = editedComments;
+  return { ...comments };
+};
+
+export const editComments = (comments, editComment, id, user, date) => {
+  console.log(id, date);
+  if (!comments[id]) return { ...comments };
+
+  const editedComments = comments[id].map((commentObj) => {
+    return commentObj.user == user && commentObj.date == date
+      ? {
+          ...commentObj,
+          comment: editComment,
+          changedText: editComment,
+          isEdit: false,
+        }
+      : comment;
+  });
+  comments[id] = editedComments;
+  return { ...comments };
+};
 
 export function findDays(postDate) {
   const fullDate = new Date(postDate);

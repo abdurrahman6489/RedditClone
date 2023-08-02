@@ -63,6 +63,20 @@ export const deleteComment = (id, date) => {
   };
 };
 
+export const openToEdit = (id, date) => {
+  return {
+    type: "openToEdit",
+    payload: { id, date },
+  };
+};
+
+export const editComment = (comment, id, date) => {
+  return {
+    type: "editComment",
+    payload: { comment, id, date },
+  };
+};
+
 export const loginUser = (username, password, index) => {
   return {
     type: "loginUser",

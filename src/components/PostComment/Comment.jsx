@@ -8,8 +8,9 @@ import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/Edit";
+import EditInput from "./EditInput";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteComment } from "../../action";
+import { deleteComment, openToEdit } from "../../action";
 import { findDays } from "../../utils";
 // const Img = styled("img")({
 //   margin: "auto",
@@ -18,7 +19,7 @@ import { findDays } from "../../utils";
 //   maxHeight: "100%",
 // });
 
-const Comment = ({ user, comment, date, color, id }) => {
+const Comment = ({ user, comment, date, color, id, isEdit, changedText }) => {
   const usernameFirstLetter = user.split("")[0].toUpperCase();
   const currentUsername = useSelector((state) => state.currentUser.firstName);
   const dateString = findDays(date);
@@ -52,20 +53,31 @@ const Comment = ({ user, comment, date, color, id }) => {
                 <Typography variant="body2" color="text.secondary">
                   {dateString}
                 </Typography>
-                <Typography gutterBottom variant="subtitle1" component="div">
-                  {comment}
-                </Typography>
+                {user == currentUsername && !isEdit && (
+                  <Typography gutterBottom variant="subtitle1" component="div">
+                    {comment}
+                  </Typography>
+                )}
+                {user == currentUsername && isEdit && (
+                  <EditInput changedText={changedText} id={id} date={date} />
+                )}
               </Grid>
               <Grid item></Grid>
             </Grid>
             <Grid item>
-              {user == currentUsername && (
+              {user == currentUsername && !isEdit && (
                 <Stack direction="row" spacing={2}>
-                  <IconButton aria-label="edit">
+                  <IconButton
+                    aria-label="edit"
+                    color="info"
+                    onClick={() => dispatch(openToEdit(id, date))}
+                  >
                     <EditIcon />
                   </IconButton>
+
                   <IconButton
                     aria-label="delete"
+                    color="error"
                     onClick={() => dispatch(deleteComment(id, date))}
                   >
                     <DeleteOutlineIcon />

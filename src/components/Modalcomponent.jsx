@@ -22,7 +22,7 @@ const style = {
   borderRadius: "1em",
 };
 
-const Modalcomponent = () => {
+const Modalcomponent = ({ children }) => {
   const popUp = useSelector((state) => state.popUp);
   const dispatch = useDispatch();
 
@@ -42,6 +42,7 @@ const Modalcomponent = () => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             {msg}
           </Typography>
+          {children}
         </Box>
       </Modal>
     </div>

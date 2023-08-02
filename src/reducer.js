@@ -4,6 +4,8 @@ import {
   changeVote,
   updateComments,
   deleteComment,
+  openInputToEdit,
+  editComments,
 } from "./utils";
 const filterCallback = {
   0: (elem) => true,
@@ -154,6 +156,37 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
         comments: {
           ...state.comments,
           ...updatedComments,
+        },
+      };
+    case "openToEdit":
+      const toBeEditedComments = openInputToEdit(
+        state.comments,
+        action.payload.id,
+        state.currentUser.firstName,
+        action.payload.date
+      );
+      return {
+        ...state,
+        comments: {
+          ...state.comments,
+          ...toBeEditedComments,
+        },
+      };
+
+    case "editComment":
+      const editedComments = editComments(
+        state.comments,
+        action.payload.comment,
+        action.payload.id,
+        state.currentUser.firstName,
+        action.payload.date
+      );
+
+      return {
+        ...state,
+        comments: {
+          ...state.comments,
+          ...editedComments,
         },
       };
 
