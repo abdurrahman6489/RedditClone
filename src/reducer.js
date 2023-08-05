@@ -1,41 +1,9 @@
-import {
-  filterObject,
-  chipProps,
-  changeVote,
-  updateComments,
-  deleteComment,
-  openInputToEdit,
-  editComments,
-} from "./utils";
-const filterCallback = {
-  0: (elem) => true,
-  1: (elem) => elem.upvote / elem.downvote > 3,
-  2: (elem) =>
-    elem.upvote / elem.downvote > 1.5 && elem.upvote / elem.downvote <= 3,
-  3: (elem) =>
-    elem.upvote / elem.downvote >= 1 && elem.upvote / elem.downvote < 1.5,
-};
-
-const INITIAL_POPUP_STATUS = {
-  open: false,
-  msg: "",
-  signal: "",
-};
-
-const INITIAL_CURRENT_USER = { username: "", password: "", firstName: "" };
-
-const INITIAL_STATE = {
-  posts: [],
-  filteredPosts: [],
-  selectedPost: {},
-  comments: {},
-  users: [],
-  currentUser: INITIAL_CURRENT_USER,
-  popUp: INITIAL_POPUP_STATUS,
-  currentFilter: Object.keys(filterObject)[1],
-  filtersArray: chipProps,
-  isLoggedIn: false,
-};
+import { filterObject, chipProps } from "./Utils/utils";
+import { changeVote } from "./Utils/changeVote.js";
+import comments from "./Utils/comments";
+import INITIAL_POPUP_STATUS from "./INITIAL_STATES/initial_popup_status.js";
+import INITIAL_CURRENT_USER from "./INITIAL_STATES/initial_current_user.js";
+import INITIAL_STATE from "./INITIAL_STATES/initial_state";
 
 export const postReducer = (state = INITIAL_STATE, action = {}) => {
   switch (action.type) {
@@ -129,7 +97,7 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
 
     case "addComment":
       const { comment, id } = action.payload;
-      const newComments = updateComments(
+      const newComments = comments.updateComments(
         state.comments,
         comment,
         id,
@@ -145,7 +113,7 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
 
     case "deleteComment":
       const { id: currentId, date } = action.payload;
-      const updatedComments = deleteComment(
+      const updatedComments = comments.deleteComment(
         state.comments,
         currentId,
         state.currentUser.firstName,
@@ -158,8 +126,9 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
           ...updatedComments,
         },
       };
+
     case "openToEdit":
-      const toBeEditedComments = openInputToEdit(
+      const toBeEditedComments = comments.openInputToEdit(
         state.comments,
         action.payload.id,
         state.currentUser.firstName,
@@ -174,7 +143,7 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
       };
 
     case "editComment":
-      const editedComments = editComments(
+      const editedComments = comments.editComments(
         state.comments,
         action.payload.comment,
         action.payload.id,

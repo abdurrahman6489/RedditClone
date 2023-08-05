@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { routepath } from "../../routepaths";
+import { routepath } from "../../Utils/routepaths";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 const SIGNUP_PATH = routepath.signup;

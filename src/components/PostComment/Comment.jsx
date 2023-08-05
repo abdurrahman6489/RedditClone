@@ -11,7 +11,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import EditInput from "./EditInput";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteComment, openToEdit } from "../../action";
-import { findDays } from "../../utils";
+import { findDays } from "../../Utils/utils";
 // const Img = styled("img")({
 //   margin: "auto",
 //   display: "block",

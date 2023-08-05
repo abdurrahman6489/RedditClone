@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addUser, setMsg } from "../action";
-import { signalProps } from "../utils";
-import { routepath } from "../routepaths";
+import { signalProps } from "../Utils/utils";
+import { routepath } from "../Utils/routepaths";
 import { Link, useNavigate } from "react-router-dom";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";

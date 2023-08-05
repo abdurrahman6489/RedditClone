@@ -4,8 +4,8 @@ import ThumbUpOffAltSharpIcon from "@mui/icons-material/ThumbUpOffAltSharp";
 import ThumbDownAltSharpIcon from "@mui/icons-material/ThumbDownAltSharp";
 
 import { useSelector, useDispatch } from "react-redux";
-import { routepath } from "../../routepaths";
-import { signalProps } from "../../utils";
+import { routepath } from "../../Utils/routepaths";
+import { signalProps } from "../../Utils/utils";
 
 import { changeDownvote, changeUpvote, setMsg } from "../../action";
 

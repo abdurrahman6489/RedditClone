@@ -15,8 +15,8 @@ import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import { useSelector, useDispatch } from "react-redux";
 import { addPost, setMsg } from "../action";
 import { useNavigate } from "react-router-dom";
-import { routepath } from "../routepaths";
-import { signalProps } from "../utils";
+import { routepath } from "../Utils/routepaths";
+import { signalProps } from "../Utils/utils";
 
 const FORM_CONTAINER_STYLE = {
   maxWidth: "95%",

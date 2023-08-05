@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { auth, provider } from "../firebase";
+import { auth, provider } from "../Utils/firebase";
 import { signInWithPopup } from "@firebase/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { loginUser, setMsg, loginWithGoogle } from "../action";
-import { signalProps } from "../utils";
-import { routepath } from "../routepaths";
+import { signalProps } from "../Utils/utils";
+import { routepath } from "../Utils/routepaths";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
@@ -173,4 +173,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
- 

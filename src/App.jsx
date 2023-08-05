@@ -8,8 +8,8 @@ import SignupPage from "./containers/SignupPage";
 import NewPost from "./containers/NewPost";
 import SinglePost from "./containers/SinglePost";
 import Modalcomponent from "./components/Modalcomponent";
-import useLocalStorage from "./CustomHook";
-import { routepath } from "./routepaths";
+import useLocalStorage from "./Utils/CustomHook";
+import { routepath } from "./Utils/routepaths";
 import { useSelector } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 

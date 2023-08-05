@@ -4,7 +4,7 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { useSelector, useDispatch } from "react-redux";
 import { filterPost } from "../../action";
-import { filterObject } from "../../utils";
+import { filterObject } from "../../Utils/utils";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius + 10,

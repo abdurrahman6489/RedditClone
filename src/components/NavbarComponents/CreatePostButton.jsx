@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { routepath } from "../../routepaths";
-import { signalProps } from "../../utils";
+import { routepath } from "../../Utils/routepaths";
+import { signalProps } from "../../Utils/utils";
 import { setMsg } from "../../action";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";

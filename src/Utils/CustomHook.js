@@ -5,7 +5,7 @@ import {
   getAllComments,
   getSelectedPost,
   loginWithGoogle,
-} from "./action";
+} from "../action";
 
 const POST_KEY = "postData";
 const USERS_KEY = "usersData";

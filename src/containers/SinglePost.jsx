@@ -8,7 +8,7 @@ import {
   getSelectedPost,
 } from "../action";
 import { useNavigate, useParams } from "react-router-dom";
-import { routepath } from "../routepaths";
+import { routepath } from "../Utils/routepaths";
 import PostComment from "../components/PostComment/PostComment";
 import Comment from "../components/PostComment/Comment";
 import {

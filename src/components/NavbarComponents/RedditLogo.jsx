@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { routepath } from "../../routepaths";
+import { routepath } from "../../Utils/routepaths";
 import { deepOrange } from "@mui/material/colors";
 import Avatar from "@mui/material/Avatar";
 import RedditIcon from "@mui/icons-material/Reddit";

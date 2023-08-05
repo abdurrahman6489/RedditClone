@@ -10,8 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { setMsg, getSelectedPost } from "../../action";
 
-import { routepath } from "../../routepaths";
-import { signalProps } from "../../utils";
+import { routepath } from "../../Utils/routepaths";
+import { signalProps } from "../../Utils/utils";
 import CommentCount from "./CommentCount";
 import DateComponent from "./DateComponent";
 import UserAvator from "./UserAvator";

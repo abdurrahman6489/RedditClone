@@ -1,6 +1,3 @@
-import { all } from "axios";
-
-export const chipVariantStatus = [false, true, false, false, false];
 export const filterObject = {
   All: { label: "All", color: "primary", filterThePosts: (array) => array },
   Best: {
@@ -71,7 +68,7 @@ export const chipProps = Object.keys(filterObject)
   .filter((elem, index) => index <= 4)
   .map((chipProp, index) => {
     const { label, color } = filterObject[chipProp];
-    let status = index == 1 ? true : false;
+    let status = label == "Best" ? true : false;
     return { label, color, status };
   });
 
@@ -83,102 +80,6 @@ export const selectTagProps = Object.keys(filterObject)
   });
 
 export const signalProps = { warning: "warning", success: "success" };
-
-export const changeVote = {
-  changeUpvote: (posts, action) =>
-    posts.map((post) =>
-      post.id === action.payload.id
-        ? {
-            ...post,
-            downvoteStatus: false,
-            downvote: !post.downvoteStatus ? post.downvote : post.downvote - 1,
-            upvote: !post.upvoteStatus
-              ? action.payload.upvote + 1
-              : action.payload.upvote - 1,
-            upvoteStatus: !post.upvoteStatus,
-          }
-        : post
-    ),
-  changeDownvote: (posts, action) =>
-    posts.map((post) =>
-      post.id === action.payload.id
-        ? {
-            ...post,
-            upvoteStatus: false,
-            upvote: !post.upvoteStatus ? post.upvote : post.upvote - 1,
-            downvote: !post.downvoteStatus
-              ? action.payload.downvote + 1
-              : action.payload.downvote - 1,
-            downvoteStatus: !post.downvoteStatus,
-          }
-        : post
-    ),
-};
-
-const color = () => `hsl(${Math.floor(Math.random() * 100)}, 80%, 50%)`;
-
-export const updateComments = (comments, newComment, id, user) => {
-  const newCommentObj = {
-    user,
-    id,
-    comment: newComment,
-    changedText: newComment,
-    isEdit: false,
-    date: new Date().toLocaleString(),
-    color: color(),
-  };
-  if (comments[id]) {
-    comments[id] = [...comments[id], newCommentObj];
-  } else {
-    comments[id] = [newCommentObj];
-  }
-  const allCommentObject = { ...comments };
-  // console.log(allCommentObject);
-  return allCommentObject;
-};
-
-export const deleteComment = (comments, id, user, date) => {
-  console.log(id, date);
-  if (!comments[id]) return { ...comments };
-  comments[id].splice(
-    comments[id].findIndex(
-      (comment) => comment.user == user && comment.date == date
-    ),
-    1
-  );
-  return { ...comments };
-};
-
-export const openInputToEdit = (comments, id, user, date) => {
-  console.log(id, date);
-  if (!comments[id]) return { ...comments };
-
-  const editedComments = comments[id].map((comment) => {
-    return comment.user == user && comment.date == date
-      ? { ...comment, isEdit: true }
-      : comment;
-  });
-  comments[id] = editedComments;
-  return { ...comments };
-};
-
-export const editComments = (comments, editComment, id, user, date) => {
-  console.log(id, date);
-  if (!comments[id]) return { ...comments };
-
-  const editedComments = comments[id].map((commentObj) => {
-    return commentObj.user == user && commentObj.date == date
-      ? {
-          ...commentObj,
-          comment: editComment,
-          changedText: editComment,
-          isEdit: false,
-        }
-      : comment;
-  });
-  comments[id] = editedComments;
-  return { ...comments };
-};
 
 export function findDays(postDate) {
   const fullDate = new Date(postDate);

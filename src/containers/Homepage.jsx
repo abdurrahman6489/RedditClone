@@ -5,32 +5,19 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
-import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
 
-import { chipProps, chipVariantStatus, selectTagProps } from "../utils";
+import { selectTagProps } from "../Utils/utils";
 
 import { useSelector, useDispatch } from "react-redux";
 import { filterPost } from "../action";
 import Footer from "../components/Footer";
-// const GRID_STYLES = {
-//   display: "grid",
-//   gridTemplateColumns: "repeat(auto-fit, minmax(20rem,1fr)",
-//   justfiyContent: "Center",
-//   alignItems: "Center",
-//   alignContent: "Center",
-//   marginTop: "2vh",
-// };
 
 const Homepage = () => {
   const filteredPosts = useSelector((state) => state.filteredPosts);
   const filtersArray = useSelector((state) => state.filtersArray);
   const dispatch = useDispatch();
   const [selectValue, setSelectValue] = useState(selectTagProps[0].value);
-
-  // useEffect(() => {
-  //   if (!isLoggedIn) setVariants(chipVariantStatus);
-  // }, [isLoggedIn]);
 
   const getVariant = (status) => {
     return status ? "filled" : "outlined";
@@ -51,7 +38,7 @@ const Homepage = () => {
         {filtersArray?.map((prop, index) => {
           const { label, color, status } = prop;
           return (
-            <Grid item xs={4} sm={4} md={2} lg={2}>
+            <Grid item xs={4} sm={4} md={2} lg={2} key={label}>
               <Chip
                 label={label}
                 variant={getVariant(status)}
@@ -90,7 +77,7 @@ const Homepage = () => {
         columns={{ xs: 4, sm: 12, md: 12, lg: 12 }}
       >
         {filteredPosts?.map((post) => (
-          <Grid item xs={4} sm={6} md={6} lg={4}>
+          <Grid item xs={4} sm={6} md={6} lg={4} key={post.title}>
             <Post {...post} key={post.id} />
           </Grid>
         ))}
