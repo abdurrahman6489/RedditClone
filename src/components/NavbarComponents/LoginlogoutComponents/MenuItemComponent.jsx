@@ -11,12 +11,6 @@ const MenuItemComponent = () => {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   return (
     <>
-      <MenuItem>
-        <CreatePostButton
-          display={{ xs: "block", sm: "block", md: "none", lg: "none" }}
-        />
-      </MenuItem>
-
       {!isLoggedIn && (
         <>
           <MenuItem sx={{ textAlign: "center" }}>

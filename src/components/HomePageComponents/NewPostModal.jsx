@@ -1,25 +1,33 @@
-import React, { useState, useEffect } from "react";
-import {
-  Typography,
-  Stack,
-  Box,
-  styled,
-  TextField,
-  FormControl,
-  Tooltip,
-} from "@mui/material";
+import React, { useState } from "react";
+
+import { Box, Modal, Typography, Fab } from "@mui/material";
+import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
+import { Stack, styled, TextField, FormControl, Tooltip } from "@mui/material";
 import { IconButton } from "@mui/material";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import AddIcon from "@mui/icons-material/Add";
 
 import { useSelector, useDispatch } from "react-redux";
-import UserAvatar from "../components/PostComponents/UserAvator";
-import Username from "../components/PostComponents/Username";
-import RouteButton from "../components/RouteButton";
-import { addPost, setMsg } from "../action";
+import UserAvatar from "../../components/PostComponents/UserAvator";
+import Username from "../../components/PostComponents/Username";
+import { addPost, setMsg } from "../../action";
 import { useNavigate } from "react-router-dom";
-import { routepath } from "../Utils/routepaths";
-import { signalProps } from "../Utils/utils";
+import { routepath } from "../../Utils/routepaths";
+import { signalProps } from "../../Utils/utils";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: { lg: "60%", md: "70%", sm: "80%", xs: "90%" },
+  maxWidth: 400,
+  bgcolor: "background.paper",
+  borderRadius: "1em",
+  boxShadow: 24,
+  p: 4,
+  paddingTop: 5,
+};
 
 const UserBox = styled(Box)({
   display: "flex",
@@ -32,22 +40,16 @@ const SUCCESS_NAVIGATE_PAGE = routepath.home;
 const LOGIN_PATH = routepath.login;
 const { success, warning } = signalProps;
 
-const NewPost = () => {
+const NewPostModal = () => {
+  const [open, setOpen] = useState(false);
   const currentUser = useSelector((state) => state.currentUser);
   const firstName = currentUser.firstName;
   const photoURL = currentUser.photoURL;
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const [post, setPost] = useState({ title: "", description: "", url: "" });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (!currentUser.username) {
-  //     dispatch(setMsg("You are logged out", warning));
-  //     navigate(SUCCESS_NAVIGATE_PAGE);
-  //     return;
-  //   }
-  // }, [currentUser.username]);
 
   const handleChange = (event) => {
     setPost((oldPost) => ({
@@ -63,6 +65,7 @@ const NewPost = () => {
     dispatch(addPost({ title, description, url }));
     navigate(SUCCESS_NAVIGATE_PAGE);
     setPost({ title: "", description: "", url: "" });
+    setOpen(false);
   };
 
   const handleFileSelect = (event) => {
@@ -81,11 +84,53 @@ const NewPost = () => {
       console.log("error ", error);
     };
   };
+
+  const handleOpen = () => {
+    if (!isLoggedIn) {
+      dispatch(setMsg("You are not logged in, please login first", warning));
+      return;
+    }
+    setOpen(true);
+  };
+
+  const handleClose = () => setOpen(false);
   return (
     <>
-      <Stack direction="row" justifyContent="space-between" sx={{ ml: "1em" }}>
-        <Box flex={4} sx={{ mt: 10 }} p={3}>
-          <RouteButton path={routepath.home} pathName="Home" left={0} top={0} />
+      <Tooltip
+        onClick={handleOpen}
+        title="Create Post"
+        sx={{
+          position: "fixed",
+          bottom: 20,
+          left: { xs: "calc(50% - 25px)", md: 30 },
+        }}
+      >
+        <Fab color="primary" aria-label="Create Post">
+          <AddIcon />
+        </Fab>
+      </Tooltip>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Tooltip
+            onClick={handleClose}
+            placement="top"
+            title="Close"
+            sx={{
+              position: "fixed",
+              top: 20,
+              right: 20,
+            }}
+          >
+            <Fab size="small" color="error">
+              <DisabledByDefaultIcon />
+            </Fab>
+          </Tooltip>
+
           <Typography variant="h6" color="gray" textAlign="center">
             Create Post
           </Typography>
@@ -103,7 +148,6 @@ const NewPost = () => {
             onChange={handleChange}
             placeholder="Title..."
             sx={{
-              width: { lg: "70%", md: "80%", sm: "100%", xs: "100%" },
               borderRadius: "2em",
               mt: 3,
               mb: 3,
@@ -121,7 +165,6 @@ const NewPost = () => {
             color="primary"
             placeholder="What's on your mind..."
             sx={{
-              width: { lg: "70%", md: "80%", sm: "100%", xs: "100%" },
               borderRadius: "2em",
               mb: 5,
               display: "block",
@@ -131,7 +174,7 @@ const NewPost = () => {
           <FormControl>
             <Stack direction="row">
               <Tooltip title="Add Photo">
-                <label for="file">
+                <label htmlFor="file">
                   <AddPhotoAlternateIcon fontSize="large" />
                 </label>
               </Tooltip>
@@ -157,9 +200,9 @@ const NewPost = () => {
             </Stack>
           </FormControl>
         </Box>
-      </Stack>
+      </Modal>
     </>
   );
 };
 
-export default NewPost;
+export default NewPostModal;

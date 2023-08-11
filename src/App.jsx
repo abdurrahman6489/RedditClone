@@ -4,7 +4,6 @@ import Layout from "./containers/Layout";
 import Homepage from "./containers/Homepage";
 import LoginPage from "./containers/LoginPage";
 import SignupPage from "./containers/SignupPage";
-import NewSignup from "./containers/NewSignup";
 import NewPost from "./containers/NewPost";
 import SinglePost from "./containers/SinglePost";
 import Modalcomponent from "./components/Modalcomponent";
@@ -35,15 +34,7 @@ function App() {
     },
     {
       path: signup,
-      element: <NewSignup />,
-    },
-    {
-      path: createPost,
-      element: (
-        <Layout>
-          <NewPost />
-        </Layout>
-      ),
+      element: <SignupPage />,
     },
     {
       path: `${singlepost}/:id`,

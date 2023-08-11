@@ -1,32 +1,31 @@
 import React, { useState } from "react";
+import { auth, provider } from "../Utils/firebase";
+import { signInWithPopup } from "@firebase/auth";
 import { useSelector, useDispatch } from "react-redux";
-import { addUser, setMsg } from "../action";
+import { setMsg, loginWithGoogle } from "../action";
 import { signalProps } from "../Utils/utils";
 import { routepath } from "../Utils/routepaths";
-import { Link, useNavigate } from "react-router-dom";
+import RouteButton from "../components/RouteButton";
+import { useNavigate } from "react-router-dom";
+import GoogleLogin from "../components/GoogleLogin";
+
+import { Button, Divider, Typography, IconButton, Stack } from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
-import {
-  Button,
-  Container,
-  Divider,
-  Typography,
-  Grid,
-  Box,
-} from "@mui/material";
-import Chip from "@mui/material/Chip";
-import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
+import GoogleIcon from "@mui/icons-material/Google";
 
 const SUCCESS_NAVIGATE_PAGE = routepath.home;
-const LOGIN_PAGE = routepath.login;
-let currentPath = SUCCESS_NAVIGATE_PAGE;
-const { success, warning } = signalProps;
-const FORM_CONTAINER_STYLE = {
-  maxWidth: "95%",
-  width: "90%",
-  aspectRatio: "1/1.5",
-  mt: "5vh",
-  padding: "1em",
+const { success } = signalProps;
+
+const BTN_STYLE = {
+  width: { lg: "30%", md: "40%" },
+  borderRadius: "5px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  margin: "auto",
+  marginBottom: "3vh",
 };
 
 const INITIAL_STATE = {
@@ -81,85 +80,101 @@ const SignupPage = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: "10vh", textAlign: "center" }}>
-      <Chip
-        icon={<ArrowLeftIcon />}
-        label="Home"
-        color="success"
-        variant="outlined"
-        onClick={() => navigate(routepath.home)}
-      />
-      <Typography variant="h4" sx={{ color: "#AA4A44" }}>
-        Sign up
-      </Typography>
-      <Grid
-        justifyContent="center"
-        alignItems="center"
-        container
-        sx={{ maxHeight: "100vh" }}
+    <>
+      <RouteButton path={routepath.home} pathName="Home" left="2vw" top="5vh" />
+      <Stack
+        direction="column"
+        gap={"1em"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        flex={4}
+        sx={{ mt: "4vh", textAlign: "center" }}
       >
-        <Grid item>
-          <FormControl sx={FORM_CONTAINER_STYLE}>
-            <TextField
-              type="text"
-              id="outlined-required"
-              label="firstname"
-              name="firstName"
-              value={user.firstName}
-              color="success"
-              sx={{ mt: "2vh" }}
-              onChange={handleChange}
-            />
-            <TextField
-              type="text"
-              id="outlined-required"
-              label="lastname"
-              name="lastName"
-              value={user.lastName}
-              color="success"
-              sx={{ mt: "2vh" }}
-              onChange={handleChange}
-            />
-            <TextField
-              type="text"
-              id="outlined-required"
-              label="username"
-              name="username"
-              value={user.username}
-              color="success"
-              sx={{ mt: "2vh" }}
-              onChange={handleChange}
-            />
-            <TextField
-              id="outlined-password-input"
-              type="password"
-              label="password"
-              name="password"
-              value={user.password}
-              autoComplete="current-password"
-              color="success"
-              sx={{ mt: "2vh" }}
-              onChange={handleChange}
-            />
-            <Button
-              variant="contained"
-              color="success"
-              onClick={handleSubmit}
-              sx={{ mt: "2vh" }}
-            >
-              Sign up
-            </Button>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-          </FormControl>
-          <Typography variant="body2">
-            Already an existing user?
-            <Link to={routepath.login}>
-              <p style={{ color: "blue" }}>Signin</p>
-            </Link>
+        <LockOutlinedIcon fontSize="large" color="primary" />
+        <FormControl
+          sx={{
+            width: { lg: "30%", md: "40%", sm: "50%", xs: "50%" },
+          }}
+        >
+          <Typography variant="h4" color="primary">
+            Signup
           </Typography>
-        </Grid>
-      </Grid>
-    </Container>
+          <TextField
+            type="text"
+            id="firstName"
+            label="Firstname"
+            name="firstName"
+            value={user.firstName}
+            color="primary"
+            sx={{ mt: "2vh" }}
+            onChange={handleChange}
+          />
+          <TextField
+            type="text"
+            id="lastname"
+            label="Lastname"
+            name="lastName"
+            value={user.lastName}
+            color="primary"
+            sx={{ mt: "2vh" }}
+            onChange={handleChange}
+          />
+          <TextField
+            type="text"
+            id="username"
+            label="Username"
+            value={user.username}
+            color="primary"
+            sx={{ mt: "2vh" }}
+            onChange={(event) =>
+              setUser((user) => ({ ...user, username: event.target.value }))
+            }
+          />
+          <TextField
+            id="password"
+            type="password"
+            value={user.password}
+            autoComplete="current-password"
+            label="Password"
+            color="primary"
+            sx={{ mt: "2vh" }}
+            onChange={(event) =>
+              setUser((user) => ({ ...user, password: event.target.value }))
+            }
+          />
+          <Button
+            id="signin"
+            color="primary"
+            variant="outlined"
+            onClick={handleSubmit}
+            sx={{ mt: "2vh" }}
+          >
+            Sign up
+          </Button>
+          {error && <p style={{ color: "red" }}>{error}</p>}
+        </FormControl>
+        <Divider
+          sx={{
+            mt: "5vh",
+            mb: "5vh",
+            width: { lg: "30%", md: "40%", sm: "50%", xs: "50%" },
+          }}
+        >
+          OR
+        </Divider>
+        <GoogleLogin msg="Signup" successMsg="signedup" />
+        <Typography variant="body1">Already a user?</Typography>
+        <IconButton
+          size="large"
+          aria-label="signin"
+          onClick={() => navigate(routepath.login)}
+        >
+          <Typography variant="button" color="primary">
+            Signin
+          </Typography>
+        </IconButton>
+      </Stack>
+    </>
   );
 };
 

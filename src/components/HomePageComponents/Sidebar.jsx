@@ -30,15 +30,6 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleCreatePost = () => {
-    if (!isLoggedIn) {
-      dispatch(setMsg("You are not logged in, please login first", warning));
-      navigate(LOGIN_PATH);
-      return;
-    }
-    navigate(SUCCESS_PATH);
-  };
-
   const handleFilterPost = (label) => {
     dispatch(filterPost(label));
   };
@@ -54,21 +45,6 @@ const Sidebar = () => {
     >
       <Box position="fixed">
         <List>
-          <ListItem disablePadding>
-            <ListItemButton
-              selected={selected === 0}
-              onClick={(event) => {
-                setSelected(0);
-                handleCreatePost();
-              }}
-            >
-              <ListItemIcon>
-                <PostAddIcon />
-              </ListItemIcon>
-              <ListItemText primary="Create Post" />
-            </ListItemButton>
-          </ListItem>
-          <Divider />
           <ListItem disablePadding>
             <ListItemButton
               selected={selected === 1}
