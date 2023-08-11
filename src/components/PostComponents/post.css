@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@300&family=Montserrat:ital,wght@0,400;1,300&display=swap');
+.card{
+    box-shadow: 0 2px 13px gray !important;
+    border-radius: 0.5em !important;
+    transition: transform 200ms ease-in !important;
+    cursor: pointer;
+}
+.card .img{
+    max-width: 100%;
+    height:17rem;
+}
+.card .title{
+    color : hsl(0, 68%, 50%) !important;
+    font-family: 'Montserrat', sans-serif;
+    /* padding: 1rem; */
+}
+.card .description{
+    padding : 1rem 0.5rem 0 0;
+    font-family: 'Merriweather Sans', sans-serif;
+}

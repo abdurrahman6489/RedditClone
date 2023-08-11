@@ -1,35 +1,41 @@
 import React, { useState, useEffect } from "react";
 import {
-  Container,
   Typography,
-  Grid,
-  Button,
-  Divider,
-  FormControl,
+  Stack,
+  Box,
+  styled,
   TextField,
-  TextareaAutosize,
+  FormControl,
+  Tooltip,
 } from "@mui/material";
-import Chip from "@mui/material/Chip";
-import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
+import { IconButton } from "@mui/material";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import AddIcon from "@mui/icons-material/Add";
 
 import { useSelector, useDispatch } from "react-redux";
+import UserAvatar from "../components/PostComponents/UserAvator";
+import Username from "../components/PostComponents/Username";
+import RouteButton from "../components/RouteButton";
 import { addPost, setMsg } from "../action";
 import { useNavigate } from "react-router-dom";
 import { routepath } from "../Utils/routepaths";
 import { signalProps } from "../Utils/utils";
 
-const FORM_CONTAINER_STYLE = {
-  maxWidth: "95%",
-  width: "90%",
-  aspectRatio: "1/1.5",
-  padding: "1em",
-};
+const UserBox = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  gap: "1em",
+  marginBottom: "0.5em",
+});
 
 const SUCCESS_NAVIGATE_PAGE = routepath.home;
 const LOGIN_PATH = routepath.login;
 const { success, warning } = signalProps;
+
 const NewPost = () => {
   const currentUser = useSelector((state) => state.currentUser);
+  const firstName = currentUser.firstName;
+  const photoURL = currentUser.photoURL;
   const [post, setPost] = useState({ title: "", description: "", url: "" });
 
   const dispatch = useDispatch();
@@ -49,6 +55,15 @@ const NewPost = () => {
       [event.target.name]: event.target.value,
     }));
   };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const { title, description, url } = post;
+    if (Object.keys(post).some((key) => post[key].length == 0)) return;
+    dispatch(setMsg("Post added successfully", success));
+    dispatch(addPost({ title, description, url }));
+    navigate(SUCCESS_NAVIGATE_PAGE);
+    setPost({ title: "", description: "", url: "" });
+  };
 
   const handleFileSelect = (event) => {
     console.log(event);
@@ -66,76 +81,84 @@ const NewPost = () => {
       console.log("error ", error);
     };
   };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const { title, description, url } = post;
-    if (Object.keys(post).some((key) => post[key].length == 0)) return;
-    dispatch(setMsg("Post added successfully", success));
-    dispatch(addPost({ title, description, url }));
-    navigate(SUCCESS_NAVIGATE_PAGE);
-    setPost({ title: "", description: "", url: "" });
-  };
-
   return (
-    <Container maxWidth="lg" sx={{ mt: "10vh", textAlign: "center" }}>
-      <Chip
-        icon={<ArrowLeftIcon />}
-        label="Home"
-        color="success"
-        variant="outlined"
-        onClick={() => navigate(routepath.home)}
-      />
-      <Grid
-        justifyContent="center"
-        alignItems="center"
-        container
-        sx={{ maxHeight: "100vh" }}
-      >
-        <Grid item>
-          <FormControl sx={FORM_CONTAINER_STYLE}>
-            <Typography variant="h4" sx={{ color: "#AA4A44" }}>
-              Create Post
-            </Typography>
-            <TextField
-              type="text"
-              id="outlined-required"
-              label="Post Title"
-              value={post.title}
-              name="title"
-              color="success"
-              fullWidth
-              sx={{ mt: "2vh" }}
-              onChange={handleChange}
-            />
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileSelect}
-              style={{ marginTop: "4vh", marginBottom: "4vh" }}
-            />
-            <TextareaAutosize
-              id="outlined-required"
-              label="Description"
-              value={post.description}
-              name="description"
-              color="success"
-              minRows="15"
-              sx={{ mt: "4vh" }}
-              onChange={handleChange}
-            />
-            <Button
-              variant="contained"
-              color="success"
-              onClick={handleSubmit}
-              sx={{ mt: "2vh" }}
-            >
-              Create Post
-            </Button>
+    <>
+      <Stack direction="row" justifyContent="space-between" sx={{ ml: "1em" }}>
+        <Box flex={4} sx={{ mt: 10 }} p={3}>
+          <RouteButton path={routepath.home} pathName="Home" left={0} top={0} />
+          <Typography variant="h6" color="gray" textAlign="center">
+            Create Post
+          </Typography>
+          <UserBox>
+            <UserAvatar username={firstName} userAvatar={photoURL} />
+            <Username username={firstName} variant="h5" />
+          </UserBox>
+          <TextField
+            type="text"
+            id="outlined-required"
+            value={post.title}
+            name="title"
+            color="primary"
+            fullWidth
+            onChange={handleChange}
+            placeholder="Title..."
+            sx={{
+              width: { lg: "70%", md: "80%", sm: "100%", xs: "100%" },
+              borderRadius: "2em",
+              mt: 3,
+              mb: 3,
+              border: "none",
+              display: "block",
+            }}
+          />
+          <TextField
+            value={post.description}
+            name="description"
+            id="outlined-multiline-static"
+            multiline
+            fullWidth
+            rows={8}
+            color="primary"
+            placeholder="What's on your mind..."
+            sx={{
+              width: { lg: "70%", md: "80%", sm: "100%", xs: "100%" },
+              borderRadius: "2em",
+              mb: 5,
+              display: "block",
+            }}
+            onChange={handleChange}
+          />
+          <FormControl>
+            <Stack direction="row">
+              <Tooltip title="Add Photo">
+                <label for="file">
+                  <AddPhotoAlternateIcon fontSize="large" />
+                </label>
+              </Tooltip>
+
+              <input
+                type="file"
+                id="file"
+                accept="image/*"
+                onChange={handleFileSelect}
+                style={{ display: "none" }}
+              />
+              <IconButton
+                size="small"
+                aria-label="Create Post"
+                variant="outlined"
+                color="primary"
+                onClick={handleSubmit}
+                sx={{ width: "100%" }}
+              >
+                <AddIcon />
+                <Typography variant="button">Create Post</Typography>
+              </IconButton>
+            </Stack>
           </FormControl>
-        </Grid>
-      </Grid>
-    </Container>
+        </Box>
+      </Stack>
+    </>
   );
 };
 

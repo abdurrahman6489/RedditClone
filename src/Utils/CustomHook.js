@@ -52,7 +52,12 @@ export default function useLocalStorage() {
       isHomeCommunity: getFollowStatus(),
     }));
 
-    dispatch(fetchPostandUser(newPosts, userData.users));
+    const users = userData.users.map((user, index) => ({
+      ...user,
+      photoUrl: getUserAvatar(index),
+    }));
+
+    dispatch(fetchPostandUser(newPosts, users));
   };
 
   useEffect(() => {

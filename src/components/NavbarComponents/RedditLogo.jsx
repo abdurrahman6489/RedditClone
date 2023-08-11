@@ -20,7 +20,7 @@ const RedditLogo = () => {
         sx={{
           mr: 2,
           ml: "3dvw",
-          display: { xs: "none", sm: "block", md: "flex" },
+          display: { xs: "none", sm: "none", md: "flex", lg: "flex" },
           fontFamily: "monospace",
           fontWeight: 700,
           letterSpacing: ".3rem",

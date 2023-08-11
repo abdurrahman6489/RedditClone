@@ -1,8 +1,13 @@
 import React from "react";
-import { Button } from "@mui/material";
+import { Box } from "@mui/material";
 import ThumbUpOffAltSharpIcon from "@mui/icons-material/ThumbUpOffAltSharp";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbDownAltSharpIcon from "@mui/icons-material/ThumbDownAltSharp";
-
+import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import Checkbox from "@mui/material/Checkbox";
+import { FormControlLabel } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { routepath } from "../../Utils/routepaths";
 import { signalProps } from "../../Utils/utils";
@@ -28,8 +33,6 @@ const UpvoteDownvote = ({
 
   const upvoted = upvoteStatus;
   const downvoted = downvoteStatus;
-  const BTN_STYLE_upvote = upvoted ? "contained" : "outlined";
-  const BTN_STYLE_downvote = downvoted ? "contained" : "outlined";
 
   const handleVote = (event) => {
     event.stopPropagation();
@@ -50,30 +53,34 @@ const UpvoteDownvote = ({
   };
 
   return (
-    <>
-      <Button
-        startIcon={<ThumbUpOffAltSharpIcon />}
-        variant={BTN_STYLE_upvote}
-        color="success"
-        name="Upvote"
-        sx={{ padding: "0.7em", borderRadius: "1em" }}
-        size="small"
-        onClick={handleVote}
-      >
-        {upvote}
-      </Button>
-      <Button
-        endIcon={<ThumbDownAltSharpIcon />}
-        variant={BTN_STYLE_downvote}
-        color="error"
-        name="Downvote"
-        sx={{ padding: "0.7em", borderRadius: "1em" }}
-        size="small"
-        onClick={handleVote}
-      >
-        {downvote}
-      </Button>
-    </>
+    <Box sx={{ ml: 2 }}>
+      <FormControlLabel
+        label={upvote}
+        control={
+          <Checkbox
+            icon={<ThumbUpOffAltIcon />}
+            checkedIcon={<ThumbUpOffAltSharpIcon />}
+            name="Upvote"
+            fontSize="small"
+            checked={upvoted}
+            onChange={handleVote}
+          />
+        }
+      />
+      <FormControlLabel
+        label={downvote}
+        control={
+          <Checkbox
+            icon={<ThumbDownOffAltIcon />}
+            checkedIcon={<ThumbDownAltSharpIcon />}
+            name="Downvote"
+            fontSize="small"
+            checked={downvoted}
+            onChange={handleVote}
+          />
+        }
+      />
+    </Box>
   );
 };
 

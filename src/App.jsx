@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "./App.css";
-import Navbar from "./components/Navbar";
 import Layout from "./containers/Layout";
 import Homepage from "./containers/Homepage";
 import LoginPage from "./containers/LoginPage";
 import SignupPage from "./containers/SignupPage";
+import NewSignup from "./containers/NewSignup";
 import NewPost from "./containers/NewPost";
 import SinglePost from "./containers/SinglePost";
 import Modalcomponent from "./components/Modalcomponent";
@@ -12,6 +12,7 @@ import useLocalStorage from "./Utils/CustomHook";
 import { routepath } from "./Utils/routepaths";
 import { useSelector } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ErrorPage from "./components/ErrorPage";
 
 function App() {
   useLocalStorage();
@@ -26,6 +27,7 @@ function App() {
           <Homepage />
         </Layout>
       ),
+      errorElement: <ErrorPage />,
     },
     {
       path: login,
@@ -33,7 +35,7 @@ function App() {
     },
     {
       path: signup,
-      element: <SignupPage />,
+      element: <NewSignup />,
     },
     {
       path: createPost,

@@ -7,6 +7,7 @@ import { signalProps } from "../Utils/utils";
 import { routepath } from "../Utils/routepaths";
 import RouteButton from "../components/RouteButton";
 import { useNavigate } from "react-router-dom";
+
 import { Button, Divider, Typography, IconButton, Stack } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import FormControl from "@mui/material/FormControl";
@@ -26,37 +27,55 @@ const BTN_STYLE = {
   marginBottom: "3vh",
 };
 
-const LoginPage = () => {
-  const navigate = useNavigate();
+const INITIAL_STATE = {
+  username: "",
+  password: "",
+  firstName: "",
+  lastName: "",
+};
 
+const NewSignup = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
-  // console.log(users);
-  const [user, setUser] = useState({ username: "", password: "" });
+  const [user, setUser] = useState(INITIAL_STATE);
   const [error, setError] = useState("");
+
+  const handleChange = (event) => {
+    let name = event.target.name;
+    let value = event.target.value;
+    setUser((obj) => ({ ...obj, [name]: value }));
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const { username, password } = user;
     if (Object.keys(user).some((key) => user[key].length == 0)) {
       setError("Please fill all the fields");
       return;
     }
+    const { username, password, firstName, lastName } = user;
     const userIndex = users.findIndex(
-      (currentUser) =>
-        currentUser.username == username && currentUser.password == password
+      (currentUser) => currentUser.username == username
     );
-    if (userIndex > -1) {
+    if (userIndex == -1) {
       dispatch(
         setMsg(
-          `Congratulatios ${username}, you are successfully loggedin`,
+          `Congratulations ${firstName}, You are successfully registered`,
           success
         )
       );
-      dispatch(loginUser(username, password, userIndex));
-      navigate(SUCCESS_NAVIGATE_PAGE);
-    } else setError("User doesn't exist");
-    setUser({ username: "", password: "" });
+      dispatch(addUser({ username, password, firstName, lastName }));
+    } else {
+      currentPath = LOGIN_PAGE;
+      dispatch(
+        setMsg(
+          `You are already registered ${users[userIndex].firstName}, login from here`,
+          warning
+        )
+      );
+    }
+    navigate(currentPath);
+    setUser(INITIAL_STATE);
   };
   const onLoginClick = () => {
     console.log("clicked");
@@ -71,7 +90,7 @@ const LoginPage = () => {
         dispatch(loginWithGoogle(userName, firstName, lastName, photoURL));
         dispatch(
           setMsg(
-            `Congratulatios ${userName}, you are successfully loggedin`,
+            `Congratulatios ${userName}, you are successfully signedup`,
             success
           )
         );
@@ -100,8 +119,28 @@ const LoginPage = () => {
           }}
         >
           <Typography variant="h4" color="primary">
-            Sign in
+            Signup
           </Typography>
+          <TextField
+            type="text"
+            id="firstName"
+            label="Firstname"
+            name="firstName"
+            value={user.firstName}
+            color="primary"
+            sx={{ mt: "2vh" }}
+            onChange={handleChange}
+          />
+          <TextField
+            type="text"
+            id="lastname"
+            label="Lastname"
+            name="lastName"
+            value={user.lastName}
+            color="primary"
+            sx={{ mt: "2vh" }}
+            onChange={handleChange}
+          />
           <TextField
             type="text"
             id="username"
@@ -132,7 +171,7 @@ const LoginPage = () => {
             onClick={handleSubmit}
             sx={{ mt: "2vh" }}
           >
-            Sign in
+            Sign up
           </Button>
           {error && <p style={{ color: "red" }}>{error}</p>}
         </FormControl>
@@ -151,16 +190,16 @@ const LoginPage = () => {
           startIcon={<GoogleIcon />}
           onClick={onLoginClick}
         >
-          Signin with Google
+          Signup with Google
         </Button>
-        <Typography variant="body1">Not an existing user yet?</Typography>
+        <Typography variant="body1">Already a user?</Typography>
         <IconButton
           size="large"
-          aria-label="Signup"
-          onClick={() => navigate(routepath.signup)}
+          aria-label="signin"
+          onClick={() => navigate(routepath.login)}
         >
           <Typography variant="button" color="primary">
-            Signup
+            Signin
           </Typography>
         </IconButton>
       </Stack>
@@ -168,4 +207,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default NewSignup;

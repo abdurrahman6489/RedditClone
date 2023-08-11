@@ -26,7 +26,7 @@ const CreatePostButton = ({ display }) => {
   return (
     <IconButton
       size="large"
-      aria-label="Login"
+      aria-label="Create-Post"
       color="inherit"
       sx={{
         color: { xs: "#333", sm: "#333", md: "#FFF", lg: "#FFF" },

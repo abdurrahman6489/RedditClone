@@ -65,8 +65,8 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
       };
 
     case "filterPost":
-      const newFiltersArray = state.filtersArray.map((filter, index) =>
-        index == action.index
+      const newFiltersArray = state.filtersArray.map((filter) =>
+        filter.label == action.payload
           ? { ...filter, status: true }
           : { ...filter, status: false }
       );
@@ -182,13 +182,15 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
       };
 
     case "loginWithGoogle":
-      const { googleUsername, googleFirstName } = action.payload;
+      const { googleUsername, googleFirstName, googlePhotoURL } =
+        action.payload;
       return {
         ...state,
         currentUser: {
           ...state.currentUser,
           username: googleUsername,
           firstName: googleFirstName,
+          photoURL: googlePhotoURL,
         },
         isLoggedIn: true,
       };

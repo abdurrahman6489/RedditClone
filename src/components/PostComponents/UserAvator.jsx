@@ -1,26 +1,17 @@
-import React from 'react'
+import React from "react";
 import Chip from "@mui/material/Chip";
 import Avatar from "@mui/material/Avatar";
 import { useSelector } from "react-redux";
-const UserAvator = ({userAvatar, username}) => {
-    const currentUser = useSelector((state) => state.currentUser);
-    let userChipLabel = username == currentUser.username ? `${username} (you)` : username;
-  const userNameFirstLetter = username.split("")[0].toUpperCase();
+const UserAvator = ({ userAvatar, username }) => {
+  const currentUser = useSelector((state) => state.currentUser);
+  const userNameFirstLetter =
+    currentUser && username ? username?.split("")[0].toUpperCase() : null;
   return (
-        <Chip
-            avatar={
-              userAvatar ? (
-                <Avatar alt={username} src={userAvatar} />
-              ) : (
-                <Avatar>{userNameFirstLetter}</Avatar>
-              )
-            }
-            label={userChipLabel}
-            variant="outlined"
-            size="medium"
-            sx={{ mt: 2 }}
-        />
-  )
-}
+    <>
+      {userAvatar && currentUser && <Avatar alt={username} src={userAvatar} />}
+      {!userAvatar && currentUser && <Avatar>{userNameFirstLetter}</Avatar>}
+    </>
+  );
+};
 
-export default UserAvator
+export default UserAvator;

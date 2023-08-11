@@ -17,9 +17,12 @@ import CreatePostButton from "./NavbarComponents/CreatePostButton";
 import SearchComponent from "./NavbarComponents/SearchComponent";
 import RedditLogo from "./NavbarComponents/RedditLogo";
 import CustomTheme from "./CustomTheme";
+import FilterContainer from "../filterComponents/FilterContainer";
+import MenuComponent from "./MenuComponent";
 
 const APP_BAR_PRIMARY_COLOR = "#2a9461";
-const APP_BAR_SECONDARY_COLOR = "#494c7d";
+// const APP_BAR_SECONDARY_COLOR = "#494c7d";
+const APP_BAR_SECONDARY_COLOR = "hsl(237, 26%, 39%)";
 // const APP_BAR_SECONDARY_COLOR = "#FF0000";
 
 const Navbar = () => {
@@ -94,11 +97,13 @@ const Navbar = () => {
       secondaryColor={APP_BAR_SECONDARY_COLOR}
     >
       <Box sx={{ flexGrow: 1, p: 0, m: 0 }}>
-        <AppBar position="static" color="secondary">
+        <AppBar position="fixed" color="secondary">
           <Toolbar>
+            <MenuComponent />
             <RedditLogo />
-            <CreatePostButton
-              display={{ xs: "none", sm: "none", md: "block", lg: "block" }}
+            <FilterContainer
+              display={{ xs: "none", sm: "none", md: "none", lg: "block" }}
+              direction="row"
             />
             <SearchComponent />
             <Box sx={{ flexGrow: 1 }} />

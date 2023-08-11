@@ -26,7 +26,7 @@ export const addPost = ({ title, description, url }) => {
   };
 };
 
-export const filterPost = (label, index, searchQuery = "") => {
+export const filterPost = (label, index = 1, searchQuery = "") => {
   return {
     type: "filterPost",
     payload: label,
@@ -88,11 +88,17 @@ export const loginUser = (username, password, index) => {
 export const loginWithGoogle = (
   googleUsername = "",
   googleFirstName = "",
-  googleLastName = ""
+  googleLastName = "",
+  googlePhotoURL = ""
 ) => {
   return {
     type: "loginWithGoogle",
-    payload: { googleUsername, googleFirstName, googleLastName },
+    payload: {
+      googleUsername,
+      googleFirstName,
+      googleLastName,
+      googlePhotoURL,
+    },
   };
 };
 

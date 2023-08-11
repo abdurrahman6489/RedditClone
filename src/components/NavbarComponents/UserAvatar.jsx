@@ -5,6 +5,7 @@ import IconButton from "@mui/material/IconButton";
 const UserAvatar = () => {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const username = useSelector((state) => state.currentUser.firstName);
+  const userPhoto = useSelector((state) => state.currentUser.photoURL);
   const userFirstLetter = username.charAt(0).toUpperCase();
 
   return (
@@ -16,7 +17,10 @@ const UserAvatar = () => {
           color="inherit"
           sx={{ margin: "auto" }}
         >
-          <Avatar sx={{ bgcolor: "orange" }}>{userFirstLetter}</Avatar>
+          {!userPhoto && (
+            <Avatar sx={{ bgcolor: "orange" }}>{userFirstLetter}</Avatar>
+          )}
+          {userPhoto && <Avatar alt={username} src={userPhoto} />}
         </IconButton>
       )}
     </>

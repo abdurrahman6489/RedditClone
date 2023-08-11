@@ -14,17 +14,17 @@ const Search = styled("div")(({ theme }) => ({
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
-  width: "350dvw",
-  [theme.breakpoints.up("sm")]: {
+  width: "50%",
+  [theme.breakpoints.down("md")]: {
     marginLeft: theme.spacing(3),
-    width: "auto",
+    width: "70%",
   },
 }));
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: "100%",
-  width: "35dvw",
+  maxWidth: "25dvw",
   position: "absolute",
   pointerEvents: "none",
   display: "flex",
@@ -39,9 +39,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
-    width: "35dvw",
-    [theme.breakpoints.up("md")]: {
-      width: "35dvw",
+    width: "50%",
+    [theme.breakpoints.down("md")]: {
+      marginLeft: theme.spacing(3),
+      width: "70%",
     },
   },
 }));
@@ -66,7 +67,7 @@ const SearchComponent = () => {
       {" "}
       <Search>
         <SearchIconWrapper>
-          <SearchIcon sx={{ position: "absolute", right: "1dvw" }} />
+          <SearchIcon />
         </SearchIconWrapper>
         <StyledInputBase
           value={searchQuery}

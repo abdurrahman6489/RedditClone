@@ -65,8 +65,11 @@ export const filterObject = {
 const filterObjectLength = Object.keys(filterObject).length;
 
 export const chipProps = Object.keys(filterObject)
-  .filter((elem, index) => index <= 4)
-  .map((chipProp, index) => {
+  .filter((chipProp) => {
+    const { label } = filterObject[chipProp];
+    return label !== "Search";
+  })
+  .map((chipProp) => {
     const { label, color } = filterObject[chipProp];
     let status = label == "Best" ? true : false;
     return { label, color, status };
