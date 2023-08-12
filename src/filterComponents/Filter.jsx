@@ -7,6 +7,9 @@ import RocketIcon from "@mui/icons-material/Rocket";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import Brightness5SharpIcon from "@mui/icons-material/Brightness5Sharp";
 import IosShareTwoToneIcon from "@mui/icons-material/IosShareTwoTone";
+import AllInboxIcon from "@mui/icons-material/AllInbox";
+import HomeIcon from "@mui/icons-material/Home";
+import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 
 import { filterPost } from "../action";
 import { useDispatch } from "react-redux";
@@ -35,6 +38,9 @@ const Filter = ({ label, color, status, index }) => {
         {label == "Hot" && <LocalFireDepartmentIcon />}
         {label == "New" && <Brightness5SharpIcon />}
         {label == "Top" && <IosShareTwoToneIcon />}
+        {label == "All" && <AllInboxIcon />}
+        {label == "Home" && <HomeIcon />}
+        {label == "Popular" && <ArrowOutwardIcon />}
         <Typography variant="button">{label}</Typography>
       </Fab>
     </CustomTheme>

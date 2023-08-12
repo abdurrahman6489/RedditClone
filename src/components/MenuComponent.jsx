@@ -6,9 +6,15 @@ import { useSelector } from "react-redux";
 import Filter from "../filterComponents/Filter";
 
 const MenuComponent = ({ children }) => {
-  const filtersArray = useSelector((state) => state.filtersArray);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const filtersArray = useSelector((state) => state.filtersArray);
+  const filteredArray = filtersArray.filter(
+    (filter) =>
+      filter.label == "Home" ||
+      filter.label == "All" ||
+      filter.label == "Popular"
+  );
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -22,7 +28,7 @@ const MenuComponent = ({ children }) => {
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
-        sx={{ color: "#FFF", mr: 2 }}
+        sx={{ color: "#333", mr: 2 }}
         onClick={handleClick}
       >
         <MenuIcon fontSize="small" />
@@ -44,7 +50,7 @@ const MenuComponent = ({ children }) => {
           horizontal: "left",
         }}
       >
-        {filtersArray?.map((filter, index) => {
+        {filteredArray?.map((filter, index) => {
           return (
             <MenuItem key={filter.label}>
               <Filter {...filter} index={index} key={filter.label} />

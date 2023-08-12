@@ -6,6 +6,7 @@ import SignupButton from "../SignupButton";
 import LogoutButton from "../LogoutButton";
 import UserAvatar from "../UserAvatar";
 import CreatePostButton from "../CreatePostButton";
+import SignUpLoginModal from "../../HomePageComponents/SignUpLoginModal";
 
 const MenuItemComponent = () => {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
@@ -14,10 +15,7 @@ const MenuItemComponent = () => {
       {!isLoggedIn && (
         <>
           <MenuItem sx={{ textAlign: "center" }}>
-            <LoginButton />
-          </MenuItem>
-          <MenuItem sx={{ textAlign: "center" }}>
-            <SignupButton />
+            <SignUpLoginModal />
           </MenuItem>
         </>
       )}
