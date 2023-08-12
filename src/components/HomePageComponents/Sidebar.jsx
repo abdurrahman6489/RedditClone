@@ -15,9 +15,16 @@ const Sidebar = () => {
         display: { xs: "none", sm: "none", md: "block", lg: "block" },
         mt: 7,
         backgroundColor: "#FFF",
+        minHeight: "100vh",
       }}
     >
-      <Box position="fixed">
+      <Box
+        position="fixed"
+        sx={{
+          minHeight: "100vh",
+          backgroundColor: "#FFF",
+        }}
+      >
         <List>
           <FeedFilter />
         </List>

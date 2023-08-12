@@ -5,10 +5,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useDispatch } from "react-redux";
 import { filterPost } from "../../action";
 import { filterObject } from "../../Utils/utils";
+import { TextField } from "@mui/material";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius + 10,
-  border: "thin solid lightGray",
   backgroundColor: "lightGray",
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   "&:hover": {
@@ -26,7 +26,7 @@ const Search = styled("div")(({ theme }) => ({
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: "100%",
-  maxWidth: "25dvw",
+  maxWidth: "100%",
   position: "absolute",
   pointerEvents: "none",
   display: "flex",
@@ -68,16 +68,13 @@ const SearchComponent = () => {
     <>
       {" "}
       <Search>
-        <SearchIconWrapper>
-          <SearchIcon />
-        </SearchIconWrapper>
-        <StyledInputBase
+        <TextField
           value={searchQuery}
+          fullWidth
           onChange={handleSearch}
           placeholder="Search…"
-          inputProps={{
-            "aria-label": "search",
-          }}
+          color="primary"
+          sx={{ border: "none", borderRadius: "2em" }}
         />
       </Search>
     </>

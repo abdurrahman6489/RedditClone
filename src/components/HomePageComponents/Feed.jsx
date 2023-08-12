@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import LargerPost from "../PostComponents/LargerPost";
@@ -12,6 +12,11 @@ const Feed = () => {
   return (
     <Box flex={3} sx={{ mt: 10 }}>
       <FilterContainer display="flex" direction="row" />
+      {filteredPosts.length == 0 && (
+        <Box sx={{ backgroundColor: "#FFF" }}>
+          <Typography variant="h6">No Post found...</Typography>
+        </Box>
+      )}
       {filteredPosts?.map((post) => (
         <LargerPost {...post} key={post.title} />
       ))}
