@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -6,7 +6,9 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
-
+import IconButton from "@mui/material/IconButton";
+import RedoIcon from "@mui/icons-material/Redo";
+import TurnedInNotIcon from "@mui/icons-material/TurnedInNot";
 import "./post.css";
 
 import { useNavigate } from "react-router-dom";
@@ -21,6 +23,7 @@ import UserAvatar from "./UserAvator";
 import Username from "./Username";
 import DateComponent from "./DateComponent";
 import UpvoteDownvote from "./UpvoteDownvote";
+import FeatureComingSoon from "../FeatureComingSoon";
 
 const SUCCESS_PATH = routepath.singlepost;
 const LOGIN_PATH = routepath.login;
@@ -40,6 +43,7 @@ const LargerPost = ({
   time,
 }) => {
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
   const upvoteDownvoteObj = {
     id,
     upvote,
@@ -51,7 +55,12 @@ const LargerPost = ({
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
 
   const handleClick = (event) => {
-    if (event.target.name == "Upvote" || event.target.name == "Downvote")
+    if (
+      event.target.name == "Upvote" ||
+      event.target.name == "share" ||
+      event.target.name == "save" ||
+      event.target.name == "Downvote"
+    )
       return;
     if (!isLoggedIn) {
       dispatch(setMsg("You are not logged in, please login first", warning));
@@ -61,31 +70,58 @@ const LargerPost = ({
     dispatch(getSelectedPost(id));
     navigate(`${SUCCESS_PATH}/${id}`);
   };
+  const handleShare = (event) => {
+    event.stopPropagation();
+    setOpen(true);
+  };
   return (
-    <Card className="card" onClick={handleClick} sx={{ mb: 3 }}>
-      <CardHeader
-        avatar={<UserAvatar username={username} userAvatar={userAvatar} />}
-        title={<Username variant="body1" username={username} />}
-        subheader={<DateComponent date={time} />}
-      />
-      <CardMedia component="img" height="20%" image={url} alt={title} />
-      <CardContent>
-        <Typography variant="h6" color="text.secondary" className="title">
-          {title}
-        </Typography>
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          className="description"
-        >
-          {description}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <UpvoteDownvote {...upvoteDownvoteObj} />
-        <CommentCount id={id} />
-      </CardActions>
-    </Card>
+    <>
+      <Card className="card" onClick={handleClick} sx={{ mb: 3 }}>
+        <CardHeader
+          avatar={<UserAvatar username={username} userAvatar={userAvatar} />}
+          title={<Username variant="body1" username={username} />}
+          subheader={<DateComponent date={time} />}
+        />
+        <CardMedia component="img" height="20%" image={url} alt={title} />
+        <CardContent>
+          <Typography variant="h6" color="text.secondary" className="title">
+            {title}
+          </Typography>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            className="description"
+          >
+            {description}
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+          <UpvoteDownvote {...upvoteDownvoteObj} />
+          <CommentCount id={id} />
+          <IconButton
+            name="share"
+            onClick={handleShare}
+            sx={{ display: { xs: "none", sm: "none" } }}
+          >
+            <RedoIcon />
+            <Typography variant="body2" ml={2}>
+              Share
+            </Typography>
+          </IconButton>
+          <IconButton
+            name="save"
+            onClick={handleShare}
+            sx={{ display: { xs: "none", sm: "none" } }}
+          >
+            <TurnedInNotIcon />
+            <Typography variant="body2" ml={2}>
+              Save
+            </Typography>
+          </IconButton>
+        </CardActions>
+      </Card>
+      <FeatureComingSoon open={open} setOpen={setOpen} />
+    </>
   );
 };
 

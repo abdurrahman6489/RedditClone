@@ -11,6 +11,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { routepath } from "../Utils/routepaths";
 import PostComment from "../components/PostComment/PostComment";
 import Comment from "../components/PostComment/Comment";
+import Post from "../components/PostComponents/Post";
+import AddComment from "../components/PostComment/AddComment";
+import RouteButton from "../components/RouteButton";
 import {
   Typography,
   Container,
@@ -18,6 +21,8 @@ import {
   FormControl,
   TextField,
   Button,
+  Box,
+  Divider,
 } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
@@ -33,8 +38,6 @@ import Tooltip from "@mui/material/Tooltip";
 export const FORM_CONTAINER_STYLE = {
   maxWidth: "99%",
   width: "95%",
-  aspectRatio: "7/1",
-  mt: "3vh",
   // border: "1px solid black",
 };
 
@@ -43,7 +46,7 @@ const SinglePost = () => {
   // console.log(selectedPost);
   // const posts = useSelector((state) => state.posts);
   const comments = useSelector((state) => state.comments);
-  const [comment, setComment] = useState("");
+  const dispatch = useDispatch();
 
   let params = useParams();
 
@@ -55,151 +58,53 @@ const SinglePost = () => {
     // dispatch(getAllComments(comments));
   }, []);
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.isLoggedIn);
-
   const {
     title,
+    id,
     description,
     url,
     upvote,
     downvote,
+    username,
     upvoteStatus,
     downvoteStatus,
-    id,
+    userAvatar,
+    time,
   } = selectedPost;
   const allComments = comments[id] || [];
-  // console.log(allComments);
-  // console.log(title, upvote);
-  const upvoted = upvoteStatus;
-  const downvoted = downvoteStatus;
-  const BTN_STYLE_upvote = upvoted ? "filled" : "outlined";
-  const BTN_STYLE_downvote = downvoted ? "filled" : "outlined";
-  const LOGIN_PATH = routepath.login;
 
-  const handleVote = (name) => {
-    if (!isLoggedIn) {
-      navigate(LOGIN_PATH);
-      return;
-    }
-    // console.log(name);
-    if (name == "Upvote") {
-      dispatch(changeUpvote({ id, upvote }));
-    } else {
-      dispatch(changeDownvote({ id, downvote }));
-    }
-  };
-
-  const clearComment = () => {
-    if (comment.length > 0) setComment("");
-  };
-
-  const handleComment = () => {
-    console.log("in the handle comment function line no 68");
-    if (comment.length == 0) return;
-    dispatch(addComment(comment, id));
-    setComment("");
-  };
   return (
-    <Container maxWidth="lg" sx={{ mt: "10vh", textAlign: "center" }}>
-      <Chip
-        icon={<ArrowLeftIcon />}
-        label="Home"
-        color="success"
-        variant="outlined"
-        onClick={() => navigate(routepath.home)}
-      />
-      <Typography variant="h5" sx={{ color: "#AA4A44", textWrap: "balance" }}>
-        {title}
-      </Typography>
-      <Grid
-        justifyContent="center"
-        alignItems="center"
-        container
-        sx={{ maxHeight: "60vh" }}
+    <Stack
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        gap: "1em",
+        mt: "10vh",
+        textAlign: "center",
+      }}
+    >
+      <Box
+        flex={2}
+        sx={{ display: { xs: "none", sm: "none", md: "block", lg: "block" } }}
       >
-        <Grid item>
-          <img
-            src={url}
-            alt={title}
-            style={{ maxWidth: "70%", width: "65%", aspectRatio: "1/1" }}
-          />
-          <Typography variant="body1" sx={{ mt: "2vh" }}>
-            {description}
-          </Typography>
-          <Stack direction="row" spacing={2} sx={{ ml: "2vw", mt: "5vh" }}>
-            <Chip
-              icon={<ThumbUpOffAltSharpIcon />}
-              label={`${upvote}`}
-              color="success"
-              variant={BTN_STYLE_upvote}
-              sx={{ padding: "0.5em" }}
-              onClick={() => handleVote("Upvote")}
-              key={"upvote"}
-            />
-            <Chip
-              icon={<ThumbDownAltSharpIcon />}
-              label={`${downvote}`}
-              color="error"
-              variant={BTN_STYLE_downvote}
-              sx={{ padding: "0.5em" }}
-              onClick={() => handleVote("Downvote")}
-              key={"downvote"}
-            />
-            {/* <Chip icon={<ShareIcon />} label="Share" color="info" /> */}
-          </Stack>
-
-          <FormControl sx={FORM_CONTAINER_STYLE}>
-            <TextField
-              type="text"
-              id="outlined-required"
-              label="comment"
-              value={comment}
-              color="success"
-              onChange={(event) => setComment(event.target.value)}
-            />
-            <Stack
-              direction="row"
-              spacing={2}
-              sx={{ ml: "2vw", mt: "2vh" }}
-              alignItems={"center"}
-              justifyContent={"flex-end"}
-            >
-              <Tooltip title="Add a Comment" placement="bottom">
-                <IconButton
-                  aria-label="comment"
-                  color="info"
-                  onClick={handleComment}
-                >
-                  <CommentIcon />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="cancel" placement="bottom">
-                <IconButton
-                  aria-label="delete-comment"
-                  color="error"
-                  sx={{ mt: "2vh" }}
-                  onClick={clearComment}
-                >
-                  <DeleteOutlineIcon />
-                </IconButton>
-              </Tooltip>
-
-              {/* <Chip
-                icon={<DeleteOutlineIcon />}
-                variant="outlined"
-                color="error"
-                label="Delete"
-                sx={{ mt: "2vh" }}
-                onClick={clearComment}
-              /> */}
-            </Stack>
-          </FormControl>
-          <PostComment commentList={allComments} />
-        </Grid>
-      </Grid>
-    </Container>
+        <RouteButton />
+      </Box>
+      <Box flex={6}>
+        <Box
+          sx={{ display: { xs: "block", sm: "block", md: "none", lg: "none" } }}
+        >
+          <RouteButton />
+        </Box>
+        <Post {...selectedPost} />
+        <AddComment id={id} />
+        <Divider sx={{ mt: "2vh", mb: "2vh" }} />
+        <PostComment commentList={allComments} />
+      </Box>
+      <Box
+        flex={2}
+        sx={{ display: { xs: "none", sm: "none", md: "block", lg: "block" } }}
+      ></Box>
+    </Stack>
   );
 };
 

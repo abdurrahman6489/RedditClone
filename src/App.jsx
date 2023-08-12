@@ -29,14 +29,6 @@ function App() {
       errorElement: <ErrorPage />,
     },
     {
-      path: login,
-      element: <LoginPage />,
-    },
-    {
-      path: signup,
-      element: <SignupPage />,
-    },
-    {
       path: `${singlepost}/:id`,
       element: (
         <Layout>

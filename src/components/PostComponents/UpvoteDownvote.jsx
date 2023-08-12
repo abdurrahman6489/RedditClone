@@ -4,8 +4,12 @@ import ThumbUpOffAltSharpIcon from "@mui/icons-material/ThumbUpOffAltSharp";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbDownAltSharpIcon from "@mui/icons-material/ThumbDownAltSharp";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
+
+import { BsArrowUpCircleFill } from "react-icons/bs";
+import { BsArrowUpCircle } from "react-icons/bs";
+import { BsArrowDownCircleFill } from "react-icons/bs";
+import { BsArrowDownCircle } from "react-icons/bs";
+
 import Checkbox from "@mui/material/Checkbox";
 import { FormControlLabel } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
@@ -58,8 +62,8 @@ const UpvoteDownvote = ({
         label={upvote}
         control={
           <Checkbox
-            icon={<ThumbUpOffAltIcon />}
-            checkedIcon={<ThumbUpOffAltSharpIcon />}
+            icon={<BsArrowUpCircle size={30} />}
+            checkedIcon={<BsArrowUpCircleFill size={30} />}
             name="Upvote"
             fontSize="small"
             checked={upvoted}
@@ -71,8 +75,8 @@ const UpvoteDownvote = ({
         label={downvote}
         control={
           <Checkbox
-            icon={<ThumbDownOffAltIcon />}
-            checkedIcon={<ThumbDownAltSharpIcon />}
+            icon={<BsArrowDownCircle size={30} />}
+            checkedIcon={<BsArrowDownCircleFill size={30} />}
             name="Downvote"
             fontSize="small"
             checked={downvoted}

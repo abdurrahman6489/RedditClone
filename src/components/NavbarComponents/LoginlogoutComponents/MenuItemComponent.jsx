@@ -24,9 +24,6 @@ const MenuItemComponent = () => {
 
       {isLoggedIn && (
         <>
-          <MenuItem>
-            <LogoutButton sx={{ textAlign: "center" }} />
-          </MenuItem>
           <MenuItem sx={{ textAlign: "center" }}>
             <UserAvatar />
           </MenuItem>

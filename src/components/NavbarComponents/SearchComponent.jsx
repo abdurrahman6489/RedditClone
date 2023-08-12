@@ -2,12 +2,14 @@ import React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { filterPost } from "../../action";
 import { filterObject } from "../../Utils/utils";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius + 10,
+  border: "thin solid lightGray",
+  backgroundColor: "lightGray",
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
@@ -39,10 +41,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
-    width: "50%",
+    width: "100%",
     [theme.breakpoints.down("md")]: {
       marginLeft: theme.spacing(3),
-      width: "70%",
+      width: "100%",
     },
   },
 }));

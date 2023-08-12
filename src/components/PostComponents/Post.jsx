@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-
+import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
-
+import IconButton from "@mui/material/IconButton";
+import RedoIcon from "@mui/icons-material/Redo";
+import TurnedInNotIcon from "@mui/icons-material/TurnedInNot";
 import "./post.css";
 
 import { useNavigate } from "react-router-dom";
@@ -16,9 +19,11 @@ import { setMsg, getSelectedPost } from "../../action";
 import { routepath } from "../../Utils/routepaths";
 import { signalProps } from "../../Utils/utils";
 import CommentCount from "./CommentCount";
+import UserAvatar from "./UserAvator";
+import Username from "./Username";
 import DateComponent from "./DateComponent";
-import UserAvator from "./UserAvator";
 import UpvoteDownvote from "./UpvoteDownvote";
+import FeatureComingSoon from "../FeatureComingSoon";
 
 const SUCCESS_PATH = routepath.singlepost;
 const LOGIN_PATH = routepath.login;
@@ -38,6 +43,7 @@ const Post = ({
   time,
 }) => {
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
   const upvoteDownvoteObj = {
     id,
     upvote,
@@ -48,7 +54,14 @@ const Post = ({
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
 
-  const handleClick = () => {
+  const handleClick = (event) => {
+    if (
+      event.target.name == "Upvote" ||
+      event.target.name == "share" ||
+      event.target.name == "save" ||
+      event.target.name == "Downvote"
+    )
+      return;
     if (!isLoggedIn) {
       dispatch(setMsg("You are not logged in, please login first", warning));
       navigate(LOGIN_PATH);
@@ -57,32 +70,58 @@ const Post = ({
     dispatch(getSelectedPost(id));
     navigate(`${SUCCESS_PATH}/${id}`);
   };
+  const handleShare = (event) => {
+    event.stopPropagation();
+    setOpen(true);
+  };
   return (
     <>
-      <Card className="card" onClick={handleClick}>
-        <CardMedia className="img" image={url} title={title} />
+      <Card className="card" onClick={handleClick} sx={{ mb: 3 }}>
+        <CardHeader
+          avatar={<UserAvatar username={username} userAvatar={userAvatar} />}
+          title={<Username variant="body1" username={username} />}
+          subheader={<DateComponent date={time} />}
+          sx={{ textAlign: "left" }}
+        />
+        <CardMedia component="img" height="20%" image={url} alt={title} />
         <CardContent>
+          <Typography variant="h6" color="text.secondary" className="title">
+            {title}
+          </Typography>
           <Typography
-            gutterBottom
-            variant="h6"
-            component="div"
-            className="title"
+            variant="body2"
+            color="text.secondary"
+            className="description"
           >
-            {title.length <= 60 ? title : `${title.slice(0, 60)}...`}
+            {description}
           </Typography>
-          <Typography variant="body2" className="description">
-            {description.length <= 60
-              ? description
-              : `${description.slice(0, 60)}...`}
-          </Typography>
-          <UserAvator userAvatar={userAvatar} username={username} />
-          <DateComponent date={time} />
         </CardContent>
-        <CardActions>
+        <CardActions disableSpacing>
           <UpvoteDownvote {...upvoteDownvoteObj} />
           <CommentCount id={id} />
+          <IconButton
+            name="share"
+            onClick={handleShare}
+            sx={{ display: { xs: "none", sm: "none" } }}
+          >
+            <RedoIcon />
+            <Typography variant="body2" ml={2}>
+              Share
+            </Typography>
+          </IconButton>
+          <IconButton
+            name="save"
+            onClick={handleShare}
+            sx={{ display: { xs: "none", sm: "none" } }}
+          >
+            <TurnedInNotIcon />
+            <Typography variant="body2" ml={2}>
+              Save
+            </Typography>
+          </IconButton>
         </CardActions>
       </Card>
+      <FeatureComingSoon open={open} setOpen={setOpen} />
     </>
   );
 };

@@ -1,20 +1,30 @@
-import { IconButton, Typography } from "@mui/material";
+import { IconButton, Stack, Typography } from "@mui/material";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-const RouteButton = ({ path, pathName, top, left }) => {
+const RouteButton = () => {
   const navigate = useNavigate();
   return (
-    <IconButton
-      size="large"
-      color="primary"
-      variant="outlined"
-      sx={{ mt: { top }, ml: { left } }}
-      onClick={() => navigate(path)}
+    <Stack
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+      }}
     >
-      <ArrowLeftIcon />
-      <Typography variant="button">{pathName}</Typography>
-    </IconButton>
+      <IconButton
+        id="home"
+        size="large"
+        color="primary"
+        variant="outlined"
+        onClick={() => navigate("/")}
+      >
+        <ArrowLeftIcon />
+      </IconButton>
+      <label htmlFor="home">
+        <Typography variant="button">Home</Typography>
+      </label>
+    </Stack>
   );
 };
 

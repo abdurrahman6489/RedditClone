@@ -3,26 +3,26 @@ import { useRouteError } from "react-router-dom";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+
 const ErrorPage = () => {
   const error = useRouteError();
   console.error(error);
   return (
     <Stack
-      direction="row"
+      direction="column"
       gap={1}
       justifyContent="center"
       alignItems="center"
-      sx={{ mt: "40vh" }}
+      sx={{ mt: "10vh" }}
     >
-      <Box>
-        <Typography variant="h4" color="gray">
-          Oops
-        </Typography>
-        <Typography variant="h6">
-          It seems you have landed a wrong page
-        </Typography>
+      <img src="src\reddit404d.png" height="40%" width="40%" />
+      <Box
+        textAlign="center"
+        sx={{ fontFamily: 'Verdana Arial Helvetica "Sans-serif"' }}
+      >
+        <Typography variant="h6">page not found</Typography>
         <Typography variant="body2">
-          <i>{error.statusText || error.message}</i>
+          the page you requested does not exist
         </Typography>
       </Box>
     </Stack>

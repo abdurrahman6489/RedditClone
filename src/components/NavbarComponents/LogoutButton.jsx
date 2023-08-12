@@ -15,7 +15,7 @@ const LogoutButton = () => {
           size="large"
           aria-label="Logout"
           color="inherit"
-          sx={{ color: { xs: "#333", sm: "#333", md: "#FFF", lg: "#FFF" } }}
+          sx={{ color: { xs: "#333", sm: "#333", md: "#333", lg: "#333" } }}
           onClick={() => dispatch(userLogout())}
         >
           <Typography variant="body1" sx={{ display: "inline" }}>

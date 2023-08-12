@@ -7,23 +7,23 @@ import { signalProps } from "../Utils/utils";
 import { routepath } from "../Utils/routepaths";
 import { useNavigate } from "react-router-dom";
 
-import { Button } from "@mui/material";
-import GoogleIcon from "@mui/icons-material/Google";
-
+import { Button, Fab, Typography } from "@mui/material";
+import { FcGoogle } from "react-icons/fc";
 const SUCCESS_NAVIGATE_PAGE = routepath.home;
 const { success } = signalProps;
 
-const BTN_STYLE = {
-  width: { lg: "30%", md: "40%" },
-  borderRadius: "5px",
+const GOOGLE_BTN_STYLE = {
+  width: "90%",
+  border: "thin solid gray",
+  borderRadius: "1em",
   display: "flex",
-  justifyContent: "center",
+  justifyContent: "space-evenly",
   alignItems: "center",
   margin: "auto",
   marginBottom: "3vh",
 };
 
-const GoogleLogin = ({ msg, successMsg }) => {
+const GoogleLogin = ({ msg, successMsg, setOpen }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const onLoginClick = () => {
@@ -43,7 +43,7 @@ const GoogleLogin = ({ msg, successMsg }) => {
             success
           )
         );
-        navigate(SUCCESS_NAVIGATE_PAGE);
+        setOpen(false);
       })
       .catch((error) => {
         console.log("error ", error);
@@ -51,14 +51,18 @@ const GoogleLogin = ({ msg, successMsg }) => {
   };
 
   return (
-    <Button
-      sx={BTN_STYLE}
-      variant="outlined"
-      startIcon={<GoogleIcon />}
-      onClick={onLoginClick}
-    >
-      {msg} with Google
-    </Button>
+    <>
+      <Fab
+        variant="extended"
+        sx={GOOGLE_BTN_STYLE}
+        size="medium"
+        color="secondary"
+        onClick={onLoginClick}
+      >
+        <Typography variant="body2">{msg} with Google</Typography>
+        <FcGoogle />
+      </Fab>
+    </>
   );
 };
 

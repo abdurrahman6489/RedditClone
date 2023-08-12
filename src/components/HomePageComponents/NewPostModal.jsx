@@ -40,12 +40,10 @@ const SUCCESS_NAVIGATE_PAGE = routepath.home;
 const LOGIN_PATH = routepath.login;
 const { success, warning } = signalProps;
 
-const NewPostModal = () => {
-  const [open, setOpen] = useState(false);
+const NewPostModal = ({ open, setOpen }) => {
   const currentUser = useSelector((state) => state.currentUser);
   const firstName = currentUser.firstName;
   const photoURL = currentUser.photoURL;
-  const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const [post, setPost] = useState({ title: "", description: "", url: "" });
 
   const dispatch = useDispatch();
@@ -85,30 +83,9 @@ const NewPostModal = () => {
     };
   };
 
-  const handleOpen = () => {
-    if (!isLoggedIn) {
-      dispatch(setMsg("You are not logged in, please login first", warning));
-      return;
-    }
-    setOpen(true);
-  };
-
   const handleClose = () => setOpen(false);
   return (
     <>
-      <Tooltip
-        onClick={handleOpen}
-        title="Create Post"
-        sx={{
-          position: "fixed",
-          bottom: 20,
-          left: { xs: "calc(50% - 25px)", md: 30 },
-        }}
-      >
-        <Fab color="primary" aria-label="Create Post">
-          <AddIcon />
-        </Fab>
-      </Tooltip>
       <Modal
         open={open}
         onClose={handleClose}
