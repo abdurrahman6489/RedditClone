@@ -102,20 +102,24 @@ const Post = ({
           <IconButton
             name="share"
             onClick={handleShare}
-            sx={{ display: { xs: "none", sm: "none" } }}
+            sx={{
+              display: { xs: "none", sm: "none", md: "inline", lg: "inline" },
+            }}
           >
             <RedoIcon />
-            <Typography variant="body2" ml={2}>
+            <Typography variant="body2" ml={2} sx={{ display: "inline" }}>
               Share
             </Typography>
           </IconButton>
           <IconButton
             name="save"
             onClick={handleShare}
-            sx={{ display: { xs: "none", sm: "none" } }}
+            sx={{
+              display: { xs: "none", sm: "none", md: "inline", lg: "inline" },
+            }}
           >
             <TurnedInNotIcon />
-            <Typography variant="body2" ml={2}>
+            <Typography variant="body2" ml={2} sx={{ display: "inline" }}>
               Save
             </Typography>
           </IconButton>

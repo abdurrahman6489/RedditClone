@@ -24,6 +24,7 @@ import Username from "./Username";
 import DateComponent from "./DateComponent";
 import UpvoteDownvote from "./UpvoteDownvote";
 import FeatureComingSoon from "../FeatureComingSoon";
+import { Box, Stack, Tooltip } from "@mui/material";
 
 const SUCCESS_PATH = routepath.singlepost;
 const LOGIN_PATH = routepath.login;
@@ -98,26 +99,44 @@ const LargerPost = ({
         <CardActions disableSpacing>
           <UpvoteDownvote {...upvoteDownvoteObj} />
           <CommentCount id={id} />
-          <IconButton
-            name="share"
-            onClick={handleShare}
-            sx={{ display: { xs: "none", sm: "none" } }}
+          <Box
+            sx={{
+              display: { xs: "none", sm: "none", md: "block", lg: "block" },
+            }}
           >
-            <RedoIcon />
-            <Typography variant="body2" ml={2}>
-              Share
-            </Typography>
-          </IconButton>
-          <IconButton
-            name="save"
-            onClick={handleShare}
-            sx={{ display: { xs: "none", sm: "none" } }}
+            <Stack
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Tooltip title="Share">
+                <IconButton name="share" id="share" onClick={handleShare}>
+                  <RedoIcon />
+                </IconButton>
+              </Tooltip>
+            </Stack>
+          </Box>
+          <Box
+            sx={{
+              display: { xs: "none", sm: "none", md: "block", lg: "block" },
+            }}
           >
-            <TurnedInNotIcon />
-            <Typography variant="body2" ml={2}>
-              Save
-            </Typography>
-          </IconButton>
+            <Stack
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Tooltip title="Save">
+                <IconButton name="save" id="save" onClick={handleShare}>
+                  <TurnedInNotIcon />
+                </IconButton>
+              </Tooltip>
+            </Stack>
+          </Box>
         </CardActions>
       </Card>
       <FeatureComingSoon open={open} setOpen={setOpen} />
