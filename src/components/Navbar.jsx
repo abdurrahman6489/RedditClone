@@ -12,6 +12,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import CampaignOutlinedIcon from "@mui/icons-material/CampaignOutlined";
 import Paper from "@mui/material/Paper";
 import Badge from "@mui/material/Badge";
+import { Fab, Tooltip } from "@mui/material";
 
 import LoginButton from "./NavbarComponents/LoginButton";
 import LogoutButton from "./NavbarComponents/LogoutButton";
@@ -24,7 +25,6 @@ import CustomTheme from "./CustomTheme";
 import MenuComponent from "./MenuComponent";
 import SignUpLoginModal from "./HomePageComponents/SignUpLoginModal";
 import FeatureComingSoon from "./FeatureComingSoon";
-import { Fab, Tooltip } from "@mui/material";
 
 const APP_BAR_PRIMARY_COLOR = "#2a9461";
 // const APP_BAR_SECONDARY_COLOR = "#494c7d";
@@ -146,7 +146,7 @@ const Navbar = () => {
                 </Badge>
               </Tooltip>
 
-              <SignUpLoginModal />
+              <LoginButton />
               <UserAvatar />
             </Box>
             <Box sx={{ display: { xs: "flex", md: "none" } }}>

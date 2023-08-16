@@ -14,7 +14,7 @@ import "./post.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setMsg, getSelectedPost } from "../../action";
+import { setMsg, getSelectedPost, openLoginModal } from "../../action";
 
 import { routepath } from "../../Utils/routepaths";
 import { signalProps } from "../../Utils/utils";
@@ -27,7 +27,6 @@ import FeatureComingSoon from "../FeatureComingSoon";
 import { Box, Stack, Tooltip } from "@mui/material";
 
 const SUCCESS_PATH = routepath.singlepost;
-const LOGIN_PATH = routepath.login;
 const { warning } = signalProps;
 
 const LargerPost = ({
@@ -65,7 +64,7 @@ const LargerPost = ({
       return;
     if (!isLoggedIn) {
       dispatch(setMsg("You are not logged in, please login first", warning));
-      navigate(LOGIN_PATH);
+      dispatch(openLoginModal());
       return;
     }
     dispatch(getSelectedPost(id));

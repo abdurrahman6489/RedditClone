@@ -2,7 +2,12 @@ import React from "react";
 import { auth, provider } from "../Utils/firebase";
 import { signInWithPopup } from "@firebase/auth";
 import { useDispatch } from "react-redux";
-import { setMsg, loginWithGoogle } from "../action";
+import {
+  setMsg,
+  loginWithGoogle,
+  closeLoginModal,
+  closeSignupModal,
+} from "../action";
 import { signalProps } from "../Utils/utils";
 import { routepath } from "../Utils/routepaths";
 import { useNavigate } from "react-router-dom";
@@ -23,8 +28,7 @@ const GOOGLE_BTN_STYLE = {
   marginBottom: "3vh",
 };
 
-const GoogleLogin = ({ msg, successMsg, setOpen }) => {
-  const navigate = useNavigate();
+const GoogleLogin = ({ msg, successMsg }) => {
   const dispatch = useDispatch();
   const onLoginClick = () => {
     console.log("clicked");
@@ -43,7 +47,8 @@ const GoogleLogin = ({ msg, successMsg, setOpen }) => {
             success
           )
         );
-        setOpen(false);
+        dispatch(closeLoginModal());
+        dispatch(closeSignupModal());
       })
       .catch((error) => {
         console.log("error ", error);

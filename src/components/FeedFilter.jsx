@@ -19,7 +19,7 @@ import { filterPost } from "../action";
 import CustomTheme from "./CustomTheme";
 
 const PRIMARY_COLOR = "hsl(206, 100%, 41%)";
-const SECONDARY_COLOR = "hsl(206, 80%, 80%)";
+const SECONDARY_COLOR = "#333";
 
 const FeedFilter = () => {
   const [selected, setSelected] = useState(-1);

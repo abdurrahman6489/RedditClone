@@ -127,3 +127,27 @@ export const closeModal = () => {
     type: "closeModal",
   };
 };
+
+export const openLoginModal = () => {
+  return {
+    type: "openLoginModal",
+  };
+};
+
+export const closeLoginModal = () => {
+  return {
+    type: "closeLoginModal",
+  };
+};
+
+export const openSignupModal = () => {
+  return {
+    type: "openSignupModal",
+  };
+};
+
+export const closeSignupModal = () => {
+  return {
+    type: "closeSignupModal",
+  };
+};

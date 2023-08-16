@@ -215,7 +215,29 @@ export const postReducer = (state = INITIAL_STATE, action = {}) => {
         ...state,
         popUp: { ...state.popUp, ...INITIAL_POPUP_STATUS },
       };
-  }
+    case "openLoginModal":
+      return {
+        ...state,
+        logInModalOpen: true,
+      };
 
+    case "closeLoginModal":
+      return {
+        ...state,
+        logInModalOpen: false,
+      };
+
+    case "openSignupModal":
+      return {
+        ...state,
+        signupModalOpen: true,
+      };
+
+    case "closeSignupModal":
+      return {
+        ...state,
+        signupModalOpen: false,
+      };
+  }
   return state;
 };

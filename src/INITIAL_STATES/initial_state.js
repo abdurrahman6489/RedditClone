@@ -12,5 +12,7 @@ const INITIAL_STATE = {
   currentFilter: Object.keys(filterObject)[1],
   filtersArray: chipProps,
   isLoggedIn: false,
+  logInModalOpen: false,
+  signupModalOpen: false,
 };
 export default INITIAL_STATE;
